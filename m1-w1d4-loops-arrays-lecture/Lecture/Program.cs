@@ -10,11 +10,15 @@ namespace Lecture
     {
         static void Main(string[] args)
         {
-            //1. Use a for-loop to print "Hello World" 10 times
 
+            int[] test = { 1, 2, 3, 4 };
 
-
-
+            int i = 0;
+            for(; i++ < 3;)
+            {
+                Console.WriteLine(test[i]);
+            }
+            Console.ReadKey();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Lecture
         */
         public int ReturnFirstElementOfParam(int[] passedInArray)
         {
-            return 1;
+            return passedInArray[0];
         }
 
         /*
@@ -23,8 +23,8 @@ namespace Lecture
             TOPIC: Setting Array Elements
         */
         public void SetFirstElement(int[] passedInArray)
-        {            
-            return;
+        {
+            passedInArray[0] = 100;
         }
     }
 }
