@@ -20,7 +20,7 @@ namespace Lecture
 
             if (1 == 1)
             {
-                result = false;
+                result = true;
             }
 
             return result;

@@ -15,8 +15,8 @@ namespace Lecture
         */
         public int ReturnNotOne()
         {
-            int result = 1;
-
+            int result = 2;
+            
             return result;
         }
     }

@@ -11,12 +11,18 @@ namespace Lecture
 
         /*
         11. Write an if statement that returns "Fizz" 
-            if the parameter is 3 and returns an empty string for anything else.
+            if the parameter is 3  returns an empty string for anything else.
             TOPIC: Conditional Logic
         */
         public string ReturnFizzIfThree(int number)
         {
-            string result = null;
+            string result = "";
+
+            //if the parameter is 3 return fizz
+            if (number == 3)
+            {
+                result = "Fizz";
+            }
 
             return result;
         }

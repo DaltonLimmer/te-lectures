@@ -19,7 +19,7 @@ namespace Lecture
 
             if (result)
             {
-                result = false;
+                // other code statements
             }
 
             return result;

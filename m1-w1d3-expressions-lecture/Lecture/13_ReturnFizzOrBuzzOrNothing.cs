@@ -18,7 +18,18 @@ namespace Lecture
          */
         public string ReturnFizzOrBuzzOrNothing(int number)
         {
-            string result = null;
+            string result = "";
+
+            //if the parameter is 3 then result = "Fizz"
+            if (number == 3)
+            {
+                result = "Fizz";
+            }
+            //if the parameter is 5 then result = "Buzz"
+            else if (number == 5)
+            {
+                result = "Buzz";
+            }
 
             return result;
         }

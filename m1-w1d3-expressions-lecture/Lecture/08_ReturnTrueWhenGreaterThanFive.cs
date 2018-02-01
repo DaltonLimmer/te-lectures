@@ -15,15 +15,11 @@ namespace Lecture
         */
         public bool ReturnTrueWhenGreaterThanFive(int number)
         {
-            bool result = false;
+            bool result = true;
 
-            if (number > 5)
+            if (number <= 5)
             {
-
-            }
-            else
-            {
-
+                result = false;
             }
 
             return result;

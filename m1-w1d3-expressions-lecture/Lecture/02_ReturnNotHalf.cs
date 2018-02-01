@@ -15,7 +15,7 @@ namespace Lecture
         */
         public double ReturnNotHalf()
         {
-            double result = 0.5;
+            double result = 0.51;
 
             return result;
         }

@@ -17,18 +17,19 @@ namespace Lecture
         */
         public int ReturnNumberAfterAddThreeAndAddFive(int number, bool addThree, bool addFive)
         {
-            if (true)
+            //If addThree is true, we'll add three to that number
+            if (addThree)
             {
-                number = number + 3;
+                number += 3;
             }
 
-            // Why can't we use an else here?
-
-            if (true)
+            //If addFive is true, we'll add five to that number
+            if (addFive)
             {
                 number += 5;
             }
-
+            
+            //We'll then return the result
             return number;
         }
     }

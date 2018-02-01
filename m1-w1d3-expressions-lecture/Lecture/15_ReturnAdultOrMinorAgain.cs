@@ -10,20 +10,17 @@ namespace Lecture
     {
 
         /*
-        15. Now, do it again with a different bool opeation.
+        15. Now, do it again with a different bool operation.
         TOPIC: Logical Not
         */
         public string ReturnAdultOrMinorAgain(int number)
         {
-            string result = null;
+            string result = "Minor";
 
-            if (true)
+            // if not an minor
+            if (!(number < 18))
             {
                 result = "Adult";
-            }
-            else
-            {
-                result = "Minor";
             }
 
             return result;
