@@ -10,6 +10,34 @@ namespace CommandArgs
     {
         static void Main(string[] args)
         {
+            string myNumStr = args[0];
+            //int myNumInt = int.Parse(myNumStr);
+            float myNumFloat = float.Parse(args[1]);
+
+            int myNumInt;
+            bool isSuccessful = int.TryParse(args[0], out myNumInt);
+            if (isSuccessful)
+            {
+                int test = myNumInt;
+            }
+
+            if (args.Length > 0)
+            {
+                if (args[0] == "pull")
+                {
+                    if (args.Length > 2 && args[1] == "upstream" && args[2] == "master")
+                    {
+                        // git pull with upstream master
+                        Console.WriteLine("pulling upstream");
+                    }
+                    else
+                    {
+                        // standard git pull
+                        Console.WriteLine("just pulling");
+                    }
+                }
+            }
+
             //1. Printing out each of the arg values
             for (int i = 0; i < args.Length; i++)
             {                
@@ -78,9 +106,11 @@ namespace CommandArgs
                         break;                    
                 }
             }
-                         
-            
-            
+
+
+            char key = Console.ReadKey().KeyChar;
+
+            Console.ReadKey();
         }
     }
 }
