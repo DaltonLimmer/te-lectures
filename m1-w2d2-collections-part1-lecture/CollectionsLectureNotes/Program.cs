@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System;
 
 namespace CollectionsLectureNotes
 {
@@ -10,6 +7,22 @@ namespace CollectionsLectureNotes
     {
         static void Main(string[] args)
         {
+            //String str = "";
+
+            //int[] myInts = { 1, 2, 3 };
+
+            //List<int> myList = new List<int>();
+            //myList.Add(1);
+            //myList.Add(2);
+            //myList.Add(1);
+
+            //foreach (int myInt in myList)
+            //{
+            //    Console.WriteLine(myInt);
+            //}
+
+            //Console.WriteLine(myList[0]);
+
             // LIST<T>
             //
             // Lists allow us to hold collections of data. They are declared with a type of data that they hold
@@ -23,6 +36,10 @@ namespace CollectionsLectureNotes
             // Creating lists of integers
             List<int> numbersList = new List<int>();
             List<int> numbersList2 = new List<int>();
+            numbersList.Add(1);
+            numbersList2.Add(2);
+
+            
 
             // Creating lists of strings
             List<string> wordsList = new List<string>();
@@ -32,13 +49,18 @@ namespace CollectionsLectureNotes
             Console.WriteLine(numbersList);
             Console.WriteLine(wordsList);
 
-            //////////////////
-            // OBJECT EQUALITY
-            //////////////////
+            ////////////////////
+            //// OBJECT EQUALITY
+            ////////////////////
 
             if (numbersList == numbersList2)
             {
                 Console.WriteLine("The two lists are the same");
+            }
+
+            if (numbersList.Equals(numbersList2))
+            {
+                Console.WriteLine("The two lists data are the same");
             }
 
             numbersList = numbersList2;
@@ -46,41 +68,43 @@ namespace CollectionsLectureNotes
             {
                 Console.WriteLine("The two lists are the same");
             }
-
+            
             Console.WriteLine();
 
-            /////////////////
-            // ADDING ITEMS
-            /////////////////
+            ///////////////////
+            //// ADDING ITEMS
+            ///////////////////
 
             // Adding items one at a time to each list
             numbersList.Add(2);
             numbersList.Add(20);
             numbersList.Add(200);
+
             //numbersList.Add("Two"); //<-- compile error, try uncommenting the code
-                        
+
             wordsList.Add("Blue");
             wordsList.Add("Grey");
             wordsList.Add("Green");
             wordsList.Add("Green");
             //wordsList.Add(5); //<-- compile error, try uncommenting the code
 
-            /////////////////
-            // ADDING MULTIPLE ITEMS
-            /////////////////
+            ///////////////////
+            //// ADDING MULTIPLE ITEMS
+            ///////////////////
 
             int[] numbersArray = { 2000, 20000 };
             numbersList.AddRange(numbersArray);
+            numbersList.AddRange(numbersList2);
 
             string[] wordsArray = { "Red", "Yellow" };
             wordsList.AddRange(wordsArray);
 
 
 
-            //////////////////
-            // ACCESSING BY INDEX
-            //////////////////
-            
+            ////////////////////
+            //// ACCESSING BY INDEX
+            ////////////////////
+
             // Use .Count to get the number of items
             for (int i = 0; i < numbersList.Count; i++)
             {
@@ -88,18 +112,18 @@ namespace CollectionsLectureNotes
             }
 
 
-            ///////////////////
-            // ACCESSING WITH FOR-EACH
-            ///////////////////
+            /////////////////////
+            //// ACCESSING WITH FOR-EACH
+            /////////////////////
             Console.WriteLine();
             foreach (string word in wordsList)
             {
                 Console.WriteLine(word);
             }
 
-            ////////////////////
-            // ADDITIONAL LIST<T> METHODS
-            ////////////////////
+            //////////////////////
+            //// ADDITIONAL LIST<T> METHODS
+            //////////////////////
             bool containsNumber = numbersList.Contains(2);
             Console.WriteLine("List contains 2 - " + containsNumber);
 
@@ -118,14 +142,14 @@ namespace CollectionsLectureNotes
             wordsList.Remove("Green");
 
             string[] words = wordsList.ToArray();
-            //int[] words1 = wordsList.ToArray(); //<-- try removing, this wont compile
 
-            ////////////////////////
-            // SORT and PRINT A LIST
-            ////////////////////////
+
+            //////////////////////////
+            //// SORT and PRINT A LIST
+            //////////////////////////
 
             wordsList.Sort();
-            Console.WriteLine(String.Join(", ", wordsList)); 
+            Console.WriteLine(String.Join(", ", wordsList));
 
             wordsList.Reverse();
             Console.WriteLine(String.Join(", ", wordsList));
@@ -146,10 +170,9 @@ namespace CollectionsLectureNotes
             languages.Add("Objective-C");
             languages.Add("Ruby");
 
-
-            ///////////////////////////
-            // ITERATING THROUGH A HASH SET
-            ///////////////////////////
+            /////////////////////////////
+            //// ITERATING THROUGH A HASH SET
+            /////////////////////////////
             foreach (var language in languages)
             {
                 Console.WriteLine(language);
@@ -209,11 +232,13 @@ namespace CollectionsLectureNotes
             ////////////////////
             // POPPING THE STACK
             ////////////////////
-            while(browserStack.Count > 0)
+            while (browserStack.Count > 0)
             {
                 string previousPage = browserStack.Pop();
                 Console.WriteLine("PREVIOUS PAGE: " + previousPage);
             }
+
+            Console.ReadKey();
 
         }
     }
