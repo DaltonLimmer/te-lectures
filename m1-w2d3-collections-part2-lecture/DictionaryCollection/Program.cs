@@ -22,6 +22,8 @@ namespace DictionaryCollection
             //      | "John"    | 75 |
             //      | "Jack"    | 73 |
 
+            var dictionaryVariable = new Dictionary<string, int>();            
+
             while (input == "yes" || input == "y")
             {
                 Console.Write("What is the person's name?: ");
@@ -29,26 +31,22 @@ namespace DictionaryCollection
 
                 Console.Write("What is the person's height (in inches)?: ");
                 int height = int.Parse(Console.ReadLine());
-
+                
                 // 2. Check to see if that name is in the dictionary
-                //      bool exists = dictionaryVariable.ContainsKey(key)
-                bool exists = false;    // <-- change this
+                bool exists = dictionaryVariable.ContainsKey(name);
 
                 if (!exists)
                 {
                     Console.WriteLine($"Adding {name} with new value.");
                     // 3. Put the name and height into the dictionary
-                    //      dictionaryVariable[key] = value;
-                    //      OR dictionaryVariable.Add(key, value);
-
+                    dictionaryVariable.Add(name, height);
                 }
                 else
                 {
                     Console.WriteLine($"Overwriting {name} with new value.");
                     // 4. Overwrite the current key with a new value
-                    //      dictionaryVariable[key] = value;
+                    dictionaryVariable[name] = height;
                 }
-
 
                 Console.WriteLine();
                 Console.Write("Would you like to enter another person (yes/no)? ");
@@ -64,8 +62,15 @@ namespace DictionaryCollection
                 input = Console.ReadLine();
 
                 //5. Let's get a specific name from the dictionary
-
-
+                if (dictionaryVariable.ContainsKey(input))
+                {
+                    int height = dictionaryVariable[input];
+                    Console.Write($"{input} is {height} inches tall.");
+                }
+                else
+                {
+                    Console.Write("Dude, it aint here!");
+                }
             }
             else if (input == "all")
             {
@@ -73,19 +78,55 @@ namespace DictionaryCollection
                 Console.WriteLine(".... printing ...");
 
                 //6. Let's print each item in the dictionary
-
+                PrintDictionary(dictionaryVariable);
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Done...");
+            Console.WriteLine();            
 
             //7. Let's get the average height of the people in the dictionary
+            var heights = dictionaryVariable.Values;
+            //long sum = 0;
+            int avg = 0;
+
+            if (heights.Count > 0)
+            {
+                avg = (int) heights.Average();
+
+                //foreach (var tempHeight in heights)
+                //{
+                //    sum += tempHeight;
+                //}
+                //avg = (int)(sum / heights.Count);
+            }
+
+            //dictionaryVariable.Remove("chris");
+
+            Console.WriteLine($"The average height is: {avg}");
+            Console.WriteLine("Done...");
+
+            Console.ReadKey();
+
+            //LinkedList<string> linkedList = new LinkedList<string>();
+            //LinkedListNode<string> nextNode = linkedList.First.Next;
+
+            // Dictionary<T,T>
+            // Create -> var dictionaryVariable = new Dictionary<string, int>(); 
+            // Add -> dictionaryVariable.Add(name, height);
+            // Update -> dictionaryVariable[name] = height;
+            // Remove -> dictionaryVariable.Remove("chris");
+            // Loop through KeyValuePairs<T,T> -> foreach (KeyValuePairs<string,int> item in dictionaryVariable)
+            // Get List of Values -> var heights = dictionaryVariable.Values;
+            // Check if key exists -> dictionaryVariable.ContainsKey(name);
         }
 
         static void PrintDictionary(Dictionary<string, int> database)
         {
             // Looping through a dictionary involves using a foreach loop
             // to look at each item, which is a key-value pair
+            foreach (var item in database)
+            {
+                Console.WriteLine($"{item.Key} is {item.Value} inches tall.");
+            }
         }
     }
 }
