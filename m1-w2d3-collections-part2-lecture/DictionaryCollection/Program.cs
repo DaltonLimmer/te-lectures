@@ -107,7 +107,10 @@ namespace DictionaryCollection
             Console.ReadKey();
 
             //LinkedList<string> linkedList = new LinkedList<string>();
-            //LinkedListNode<string> nextNode = linkedList.First.Next;
+            //LinkedListNode<string> nextNode = linkedList.First;
+            //var node2 = nextNode.Previous;
+
+            //linkedList.AddAfter(nextNode, "chris");
 
             // Dictionary<T,T>
             // Create -> var dictionaryVariable = new Dictionary<string, int>(); 
