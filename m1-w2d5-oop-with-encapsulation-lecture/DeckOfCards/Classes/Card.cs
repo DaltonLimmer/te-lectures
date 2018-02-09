@@ -37,8 +37,6 @@ namespace DeckOfCards.Classes
             }
         }
 
-
-
         /// <summary>
         /// Gets the word for face value.
         /// </summary>

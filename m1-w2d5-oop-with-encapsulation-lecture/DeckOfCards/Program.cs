@@ -18,8 +18,6 @@ namespace DeckOfCards
                 Card topCard = deck.DealOne();
                 Console.WriteLine($"{topCard.FaceValue} of {topCard.Suit} - {topCard.Symbol}");
             }
-
-            Console.ReadKey();
         }
     }
 }
