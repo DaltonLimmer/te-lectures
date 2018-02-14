@@ -10,6 +10,7 @@ namespace AnimalFarm
     {
         public override bool IsWarmBlooded()
         {
+            bool isWarmBlooded = base.IsWarmBlooded();
             return false;
         }
 
