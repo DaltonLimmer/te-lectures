@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lecture.Farming
 {
-    public class Duck : FarmAnimal
+    public class Duck
     {
-        public override string NameOfAnimal
+        public string NameOfAnimal
         {
             get
             {
@@ -16,14 +16,14 @@ namespace Lecture.Farming
             }
         }
 
-        public override string MakeSoundOnce()
+        public string MakeSoundOnce()
         {
-            return "Honk";
+            return "Quack";
         }
 
-        public override string MakeSoundTwice()
+        public string MakeSoundTwice()
         {
-            return MakeSoundOnce() + " " + MakeSoundOnce();
+            return "Quack Quack";
         }
     }
 }

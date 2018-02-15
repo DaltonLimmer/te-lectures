@@ -4,26 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lecture.Farming
+namespace OldMacDonald.Farming
 {
     public class Duck : FarmAnimal
     {
-        public override string NameOfAnimal
+        public Duck() : base()
         {
-            get
-            {
-                return "Duck";
-            }
+
         }
 
         public override string MakeSoundOnce()
         {
-            return "Honk";
+            return "Quack";
         }
 
         public override string MakeSoundTwice()
         {
-            return MakeSoundOnce() + " " + MakeSoundOnce();
+            return "Quack Quack";
         }
+        
     }
 }

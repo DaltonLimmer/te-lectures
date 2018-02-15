@@ -6,27 +6,12 @@ using System.Threading.Tasks;
 
 namespace Lecture.Farming
 {
-    public class FarmAnimal
+    public abstract class FarmAnimal
     {
-        public virtual string NameOfAnimal
-        {
-            get
-            {
-                return "Console";
-            }
-        }
+        public abstract string NameOfAnimal { get; }
 
-        public virtual string MakeSoundOnce()
-        {
-            Console.Beep();
-            return "Beep";
-        }
+        public abstract string MakeSoundOnce();
 
-        public virtual string MakeSoundTwice()
-        {
-            Console.Beep();
-            Console.Beep();
-            return "Beep Beep";
-        }
+        public abstract string MakeSoundTwice();
     }
 }

@@ -105,9 +105,52 @@ namespace Lecture
             Console.WriteLine(friend.MakeSoundTwice());
             Console.WriteLine();
 
-            friend.
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+
+            int width = 25;
+            Console.WriteLine(CreateRow("Employee", "Hours Worked", "Total Weekly Pay", width));
+            Console.WriteLine();
+            Console.WriteLine(CreateRow("Bob Mackey", "20", "200", width));
+
+            Console.WriteLine("{0, -20}{1, -20}{2, -20}", "Employee", "Hours Worked", "Total Weekly Pay");
+            Console.WriteLine();
+            Console.WriteLine("{0, -20}{1, -20}{2, -20}", "Bob Mackey", "20", "200");
 
             Console.ReadKey();
+        }
+
+        public static string CreateRow(string col1, string col2, string col3, int colWidth)
+        {
+            string result = "";
+
+            result += CreateColumn(col1, colWidth);
+            result += CreateColumn(col2, colWidth);
+            result += CreateColumn(col3, colWidth);
+
+            return result;
+        }
+
+        public static string CreateColumn(string col, int colWidth)
+        {
+            string result = "";
+            
+            if (col.Length > colWidth)
+            {
+                result += col.Substring(0, colWidth);
+            }
+            else
+            {
+                result += col;
+                int padding = colWidth - col.Length;
+                for(int i = 0; i < padding; i++)
+                {
+                    result += " ";
+                }
+            }
+
+            return result;
         }
     }
 }
