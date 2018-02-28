@@ -22,13 +22,13 @@ LIMIT 10;
 */
 
 -- SQL
+
 /*
 SELECT TOP 10 name, lifeexpectancy 
 FROM country 
 WHERE lifeexpectancy IS NOT NULL 
 ORDER BY lifeexpectancy DESC;
 */
-
 
 
 -- CONCATENATING OUTPUTS
@@ -45,6 +45,7 @@ ORDER BY district, name;
 */
 
 -- SQL
+
 /*
 SELECT (name + ', ' + district) as name_and_state 
 FROM city 
@@ -59,10 +60,10 @@ ORDER BY district, name;
 --SELECT AVG(lifeexpectancy) FROM country;
 
 -- Total population in Ohio
---SELECT SUM(population) FROM city WHERE district = 'Ohio';
+--SELECT SUM(population) FROM city WHERE name = 'Cincinnati';
 
 -- The surface area of the smallest country in the world
---SELECT MIN(surfacearea) FROM country;
+--SELECT MAX(surfacearea) FROM country;
 
 -- The 10 largest countries in the world
 -- Postgres
@@ -71,8 +72,11 @@ ORDER BY district, name;
 --SELECT TOP 10 * FROM country ORDER BY surfacearea DESC
 
 -- The number of countries who declared independence in 1991
---SELECT COUNT(*) FROM country Where indepyear = 1991;
-
+--SELECT COUNT(*) as independence FROM country Where indepyear = 1991;
+--SELECT MIN(2018 - indepyear) as year_since, name FROM country WHERE indepyear IS NOT NULL GROUP BY name
+--SELECT MAX(population) as min_pop, countrycode FROM city Group By countrycode Order By countrycode ASC
+--SELECT TOP 1 population as min_pop, countrycode FROM city Order By population ASC
+--SELECT AVG(population) as avg_pop, MIN(population) as min_pop, MAX(population) as max_pop, name FROM city Group By name
 
 
 -- GROUP BY EXERCISES
@@ -91,18 +95,25 @@ order by countries desc;
 --select continent, avg(lifeexpectancy) as avg_lifeexpectancy from country where continent <> 'Antarctica' group by continent order by avg_lifeexpectancy desc;
 
 -- Sum of the population of cities in each state in the USA ordered by state name
---select district, sum(population) from city where countrycode='USA' group by district order by district;
+--select sum(population) as population from city where countrycode='USA';
 
 -- The average population of cities in each state in the USA ordered by state name
 --select district, avg(population) from city where countrycode='USA' group by district order by district;
+--Select population, district, countrycode From city 
+--WHERE countrycode = (Select TOP 1 code FROM country WHERE continent = 'Asia');
 
+Select TOP 1 code FROM country WHERE continent = 'Asia'
+
+--Select code FROM country WHERE code = 'AFG'
+--Select population, district, countrycode FROM city WHERE countrycode = 'AFG'
+--Select population, district, countrycode FROM city WHERE countrycode = 'AFG' OR countrycode = 'NLD'
 
 -- Additional samples
 -- You may alias column and table names to provide more descriptive names
 --SELECT name AS CityName FROM city AS cities;
 
 -- Alias can also be used to create shorthand references, such c for city and co for country.
---SELECT c.name, co.name FROM city AS c, country AS co;
+--SELECT c.name as City, co.name as Country FROM city AS c, country AS co;
 
 -- Ordering allows columns to be displayed in ascending order, or descending order (Look at Arlington)
 --SELECT name, population FROM city WHERE countryCode='USA' ORDER BY name ASC, population DESC;
