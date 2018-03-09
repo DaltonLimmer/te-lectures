@@ -28,7 +28,7 @@ namespace WorldGeography.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-
+                    
                     SqlCommand cmd = new SqlCommand(SQL_AddCity, conn);
                     cmd.Parameters.AddWithValue("@id", city.CityId);
                     cmd.Parameters.AddWithValue("@name", city.Name);

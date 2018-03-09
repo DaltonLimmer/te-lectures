@@ -11,7 +11,7 @@ using WorldGeography.Models;
 
 namespace WorldGeography.DAL.Tests
 {
-    //[TestClass()]
+    [TestClass()]
     public class CitySqlDALTests
     {
         private TransactionScope tran;      //<-- used to begin a transaction during initialize and rollback during cleanup
