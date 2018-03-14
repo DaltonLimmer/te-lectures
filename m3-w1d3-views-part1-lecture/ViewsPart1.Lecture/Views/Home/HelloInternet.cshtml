@@ -1,0 +1,38 @@
+﻿
+@{ 
+    Layout = null;
+
+    string name = Request.QueryString["name"];
+    string age = Request.QueryString["age"];
+
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+
+<body>
+
+    @if (name != null && name != "")
+    {
+
+        <h1>Hello, @name</h1>
+
+        if(age != null && age != "")
+        {
+            <h2>You are @age years old.</h2>
+        }
+
+
+    } else { 
+        <h1>Hello, Internet</h1>
+    }
+
+</body>
+
+</html>
+

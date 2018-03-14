@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+
+
+@* 
+    Write out FizzBuzz in a list item <li> for 1-300 (inclusive) 
+    
+    Fizz = Any number divisible by 3
+    Buzz = Any number divisible by 5
+    FizzBuzz = Any number divisible by BOTH 3 AND 5    
+*@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <style>
+
+        .Fizz {
+            color: green;
+        }
+
+        .Buzz {
+            color: blue;
+        }
+
+        .FizzBuzz {
+            color: red;
+            font-size: 52pt;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div>
+    
+        <ul>
+            @for (int i = 1; i <= 300; i++)
+            {
+                string word = "";
+                if (i % 3 == 0)
+                {
+                    word = "Fizz";
+                } if(i % 5 == 0)
+                {
+                    word += "Buzz";
+                }
+
+                if (word == "")
+                {
+                    word = null;
+                }
+
+                <li class="@(word ?? "")">@(word ?? i.ToString())</li>
+
+            }
+        </ul>
+
+
+
+    </div>
+</body>
+</html>

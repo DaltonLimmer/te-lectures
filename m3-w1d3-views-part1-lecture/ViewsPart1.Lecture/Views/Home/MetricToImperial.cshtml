@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;  //<-- ignore this for now, it is used to create reusable site layouts
+
+    decimal maxValue = decimal.Parse(Request.QueryString["maxValue"]);
+    decimal stepValue = decimal.Parse(Request.QueryString["stepValue"]);
+    
+}
+
+@* Maximum Value, step value *@
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Metric To Imperial Speeds</title>
+    <link href="~/styles.css" rel="stylesheet" />
+</head>
+<body>
+
+    <p>Metric to Imperial Unit Calculation (kph to mph) </p>
+    <table>
+        <thead>
+            <tr>
+                <td>Metric</td>
+                <td>Imperial Unit</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @*
+                Using Razor syntax, start a for-loop.
+                This will create a new <tr> tag each iteration
+                through the for-loop.
+
+                mph = kph * 0.62
+
+            *@
+
+            @for(decimal kph = 0; kph <= maxValue; kph += stepValue )
+            {
+                <tr>
+                    <td>@kph</td>
+                    <td>@(kph * 0.62m)</td>
+
+
+                </tr>
+            }
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</body>
+</html>
