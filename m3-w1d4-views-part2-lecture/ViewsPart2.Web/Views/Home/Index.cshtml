@@ -3,8 +3,10 @@
     It represents an instance of the Person class
 *@
 
-@* Insert namespace and model here... *@
+@using ViewsPart2.Web.Models
 
+@model Person
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,13 +35,17 @@
         *@
 
 
-        <h2 class="center"></h2>        @* Add "FirstName LastName" *@
-        <p class="center">from </p>     @* Add Hometown *@
+        <h2 class="center">@Model.FirstName @Model.LastName</h2>        @* Add "FirstName LastName" *@
+        <p class="center">from @Model.Hometown</p>     @* Add Hometown *@
 
         <p>
             Interests:
             <ul>
                 @* Write out all interests as <li> *@
+                @foreach(string interest in Model.Interests)
+                {
+                    <li>@interest</li>
+                }
         </ul>
 
         </p>

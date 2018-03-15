@@ -3,6 +3,10 @@
 *@
 
 @* Insert model here... *@
+@using ViewsPart2.Web.Models
+
+@model List<Person>
+
 
 <!DOCTYPE html>
 
@@ -39,6 +43,22 @@
                 Loop through each entry in the Model (List<Person>) and create a table row for each person.
                 Write out FirstName, LastName, Hometown in 3 columns.
             *@
+            @foreach(Person p in Model)
+            {
+                <tr>
+                    <td>
+                        @p.FirstName
+                    </td>
+                    <td>
+                        @p.LastName
+                    </td>
+                    <td>
+                        @p.Hometown
+                    </td>
+                </tr>
+            }
+
+
         </table>
 
     </section>

@@ -4,6 +4,7 @@
 *@
 
 @* Insert model here... *@
+@model List<string>
 
 <!DOCTYPE html>
 
@@ -28,6 +29,12 @@
         <h2 class="center">List of Colors</h2>
         <ul>
             @* Show name of each color in the list as <li>.  Color of the <li> should match the color's name. *@
+            @foreach(string color in Model) {
+
+                <li style="color: @color">@color</li>
+
+            }
+            
 
 
         </ul>

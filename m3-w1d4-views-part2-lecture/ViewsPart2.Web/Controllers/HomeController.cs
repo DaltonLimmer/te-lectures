@@ -20,20 +20,43 @@ namespace ViewsPart2.Web.Controllers
         // GET: /
         public ActionResult Index()
         {
-            return View();
+            Person person = new Person
+            {
+                FirstName = "Han",
+                LastName = "Solo",
+                Hometown = "???",
+                Interests = new List<string>()
+                {
+                    "Flying",
+                    "Wookies"
+                }
+            };
+
+            return View(person);
         }
 
 
         // GET: Home/Colors
         public ActionResult Colors()
         {
-            return View();
+            List<string> colors = new List<string>();
+            colors.Add("green");
+            colors.Add("red");
+            colors.Add("blue");
+            colors.Add("darkgray");
+
+            return View(colors);
         }
 
         // GET: Home/Team
         public ActionResult Team()
         {
-            return View();
+            List<Person> team = new List<Person>();
+            team.Add(new Person { FirstName = "Luke", LastName = "Skywalker", Hometown = "Tatooine" });
+            team.Add(new Person { FirstName = "Anakin", LastName = "Skywalker", Hometown = "Tatooine" });
+            team.Add(new Person { FirstName = "Rey", LastName = "?", Hometown = "Jakku" });
+
+            return View(team);
         }
     }
 }
