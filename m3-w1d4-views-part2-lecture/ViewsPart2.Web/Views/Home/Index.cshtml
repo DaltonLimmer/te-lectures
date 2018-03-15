@@ -1,0 +1,50 @@
+﻿@*
+    Our Model for this View is a Person 
+    It represents an instance of the Person class
+*@
+
+@* Insert namespace and model here... *@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/Content/styles.css" />
+</head>
+<body>
+
+    <header>
+        <h1>ASP.NET MVC Exercises - Views Part 2: Models</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+        </ul>
+    </nav>
+    
+    <section id="main-content">
+
+        @*
+        Here we will create HTML elements that rely on the Model our View is bound to
+        "Model" is a reserved Property accessible to the View
+        *@
+
+
+        <h2 class="center"></h2>        @* Add "FirstName LastName" *@
+        <p class="center">from </p>     @* Add Hometown *@
+
+        <p>
+            Interests:
+            <ul>
+                @* Write out all interests as <li> *@
+        </ul>
+
+        </p>
+
+
+    </section>
+</body>
+</html>
