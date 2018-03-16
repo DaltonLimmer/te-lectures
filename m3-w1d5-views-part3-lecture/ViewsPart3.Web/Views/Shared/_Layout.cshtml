@@ -1,0 +1,32 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/Content/styles.css" />
+    @RenderSection("headSection", false)
+</head>
+<body>
+    <header>
+        <h1>ASP.NET MVC Exercises - Views Part 3: Models</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>@Html.ActionLink("List", "Team", "Home")</li>
+            <li>@Html.ActionLink("Colors", "Colors", "Home")</li>
+        </ul>
+    </nav>
+
+    <section id="main-content">
+
+
+        <!--Begin Content-->
+        @RenderBody()
+        <!--End Content-->
+
+
+
+    </section>
+</body>
+</html>
