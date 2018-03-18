@@ -1,0 +1,55 @@
+﻿<!--
+    NOTES:
+    Generally students are not familiar with the various <input> elements.
+
+    Typing them out does help, also just showing them the HTML that is generated also
+    shows this.
+
+    While I prefer the simple HTML way, the one major benfit that the HTML helpers
+    offer is that if you wanted to pre-select values, it can be done by passing the model into
+    the view.
+-->
+
+@model Forms.Web.Models.FormModel
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<h2>Index</h2>
+
+<!-- A form tag tells the browser, to send ANY "input" element as a request variable when the user submits the form -->
+@* Where to send the request *@            @* how to send it *@
+<form action="@Url.Action("FormResult", "Home")" method="get">
+
+
+
+    <!--<input type="text" name="name" placeholder="enter name" /> -->
+    @Html.TextBoxFor(c => c.Name, new { placeholder = "enter name" })
+
+
+    <!--<input type="password" name="password" placeholder="enter password" />-->
+    @Html.PasswordFor(c => c.Password, new { placeholder = "enter password" })
+
+    <!--<input type="checkbox" name="subscribe" /> please send me marketing information-->
+    @Html.CheckBoxFor(m => m.Subscribe) please send me marketing information
+
+
+    <!--<input type="radio" name="gender" value="M" /> Male-->
+    <!--<input type="radio" name="gender" value="F" /> Female-->
+    @Html.RadioButtonFor(m => m.Gender, "M") Male
+    @Html.RadioButtonFor(m => m.Gender, "F") Female
+
+    <!-- Html Helpers for <select> are pretty ugly and confusing, so I typically stay away from them -->
+    <select name="state">
+        <option value="OH">Ohio</option>
+        <option value="MI">Michigan</option>
+        <option value="WY">Wyoming</option>
+    </select>
+
+    <!-- Other types of inputs -->
+    <input type="color" name="favoriteColor" placeholder="favorite color" />
+
+    <button>Go</button>
+</form>

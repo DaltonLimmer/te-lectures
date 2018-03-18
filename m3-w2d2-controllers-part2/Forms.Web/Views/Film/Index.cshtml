@@ -1,0 +1,30 @@
+﻿@model Forms.Web.Models.FilmSearchModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Film Search</h2>
+
+                                        @* Action *@   @* Controller *@
+<form method="get" action="@Url.Action("SearchResult", "Film")">
+
+    @* 6. Use the HTML Helpers to show different search fields*@
+    @Html.TextBoxFor(m => m.Title, new { placeholder = "enter a title" })
+    @Html.TextBoxFor(m => m.Description, new { placeholder = "enter a description" })
+    @Html.TextBoxFor(m => m.ReleaseYear, new { placeholder = "enter a release year", type="number" })
+    @Html.TextBoxFor(m => m.MinLength, new { placeholder = "enter min length", type = "number" })
+    
+    @* @Html.TextBoxFor(m => m.MaxLength, new { placeholder = "enter max length" }) *@
+    <input type="number" name="MaxLength" placeholder="enter max length" />
+
+    <select name="Rating">
+        <option value="G">G</option>
+        <option value="PG">PG</option>
+        <option value="PG-13">PG-13</option>
+        <option value="R">R</option>
+        <option value="NC-17">NC-17</option>
+    </select>
+
+
+    <button>GO!</button>
+</form>
