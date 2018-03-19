@@ -25,9 +25,11 @@ namespace Forms.Web
         {
             var kernel = new StandardKernel();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+            /* Step 4A */
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-
+            /* Step 4B */
+            kernel.Bind<IFilmDAL>().To<FilmDAL>().WithConstructorArgument("connectionString", connectionString);
 
 
 

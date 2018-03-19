@@ -1,0 +1,33 @@
+﻿
+
+@* Step 2 *@
+
+
+@model Forms.Web.Models.PersonModel
+<h2>Home Index Page</h2>
+
+                       @* "/Home/FormResult" *@
+<form method="get" action="@Url.Action("FormResult", "Home")">
+
+    @* Step 8 *@
+
+    @* A way to have Razor generate the <input> tag for you *@
+    First Name: @Html.TextBoxFor(c => c.FirstName, new { placeholder = "First Name" })
+    Last Name: @Html.TextBoxFor(c => c.LastName, new { placeholder = "Last Name" })<br />
+    Favorite Color: <input type="color" name="favoriteColor" /><br />
+
+    Number of Kids: <input type="text" name="kidCount" value="@Model.KidCount" /><br />
+
+    State of Residence:
+    <select name="state">
+        <option value="OH">Ohio</option>
+        <option value="IN">Indiana</option>
+        <option value="KY">Kentucky</option>
+    </select>
+
+
+    <br />
+    <input type="submit" name="submitButton" value="Submit via GET" />
+
+</form>
+

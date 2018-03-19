@@ -1,0 +1,34 @@
+﻿
+@* Step 4 *@
+
+@* Step 7 *@
+@model Forms.Web.Models.PersonModel
+
+
+<h2>FormResult Page</h2>
+
+
+@* Step 13 *@
+<table>
+    <tr>
+        <th>First Name</th>
+        <td>@Model.FirstName</td>
+    </tr>
+    <tr>
+        <th>Last Name</th>
+        <td>@Model.LastName</td>
+    </tr>
+    <tr>
+        <th>State</th>
+        <td>@Model.State</td>
+    </tr>
+    <tr>
+        <th>Number of Kids</th>
+        <td>@Model.KidCount</td>
+    </tr>
+    <tr>
+        <th>Favorite Color</th>
+        <td style="background-color: @Model.FavoriteColor">&nbsp;</td>
+    </tr>
+</table>
+

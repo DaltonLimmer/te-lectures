@@ -1,0 +1,25 @@
+﻿@* Step 4 *@
+
+@using Forms.Web.Models
+@model IList<Film>
+
+
+
+
+@* Step 16 *@
+<h2>Search Results</h2>
+
+<table>
+    @foreach (var film in Model)
+    {
+        <tr>
+            <td>@film.Id</td>
+            <td>@film.Title</td>
+            <td>@film.Description</td>
+            <td>@film.ReleaseYear</td>
+            <td>@film.Length</td>
+            <td>@film.Rating</td>
+        </tr>
+    }
+
+</table>

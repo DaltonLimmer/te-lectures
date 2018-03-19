@@ -8,7 +8,7 @@ using Forms.Web.Models;
 
 namespace Forms.Web.DAL
 {
-    public class FilmDAL
+    public class FilmDAL : IFilmDAL /* Step 1A */
     {
         private string connectionString;
 
@@ -16,14 +16,14 @@ namespace Forms.Web.DAL
         {
             this.connectionString = connectionString;
         }
-      
+
         public IList<Film> SearchFilms(string title, string description, int? releaseYear, int? minLength, int? maxLength, string rating)
         {
             IList<Film> films = new List<Film>();
 
             try
             {
-                using(SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
 
@@ -37,7 +37,7 @@ namespace Forms.Web.DAL
                         Film film = MapFilmFromReader(reader);
                         films.Add(film);
                     }
-                    
+
                 }
             }
             catch (SqlException ex)
@@ -47,6 +47,7 @@ namespace Forms.Web.DAL
 
             return films;
         }
+
 
         private Film MapFilmFromReader(SqlDataReader reader)
         {
@@ -114,5 +115,6 @@ namespace Forms.Web.DAL
 
             return cmd;
         }
+
     }
 }

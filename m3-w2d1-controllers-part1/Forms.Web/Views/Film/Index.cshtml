@@ -1,0 +1,23 @@
+﻿
+@* Step 2 *@
+
+
+
+@model Forms.Web.Models.FilmSearchViewModel /* Step 7 */
+
+<h2>Search Movies</h2>
+
+<form method="get" action="@Url.Action("SearchResult", "Film")">
+
+    @* Step 8 *@
+    Title                : @Html.TextBoxFor(m => m.Title)<br />
+    Description          : @Html.TextBoxFor(m => m.Description)<br />
+    ReleaseYear          : @Html.TextBoxFor(m => m.ReleaseYear, new { type = "number" })<br />
+    MinLength            : @Html.TextBoxFor(m => m.MinLength, new { type = "number" })<br />
+    MaxLength            : @Html.TextBoxFor(m => m.MaxLength, new { type = "number" })<br />
+    Rating               : @Html.TextBoxFor(m => m.Rating)<br />
+    
+    <input type="submit" />
+
+
+</form>
