@@ -1,7 +1,29 @@
 ﻿
-@{
-    ViewBag.Title = "Success";
-}
 
-<h2>Success</h2>
+@using Forms.Web.Models
+@model IList<User>
+
+<h2>Success!</h2>
+
+
+
+<h2>Existing Users</h2>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Email Address</th>
+        <th>Password</th>
+    </tr>
+
+    @foreach (User u in Model)
+    {
+        <tr>
+            <td>@u.Id</td>
+            <td>@u.EmailAddress</td>
+            <td>@u.Password</td>
+        </tr>
+    }
+
+</table>
 

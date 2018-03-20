@@ -27,7 +27,7 @@ namespace Forms.Web
 
             string connectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
-            kernel.Bind<IFilmDAL>().To<FilmDAL>().WithConstructorArgument("connectionString", connectionString);
+            kernel.Bind<IUserDAL>().To<UserDAL>().WithConstructorArgument("connectionString", connectionString);
 
             return kernel;
         }

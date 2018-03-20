@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Forms.Web.DAL
 {
-    public interface IFilmDAL
+    public interface IUserDAL
     {
-        IList<Film> SearchFilms(string title, string description, int? releaseYear, int? minLength, int? maxLength, string rating);
+        User CreateUser(string emailAddress, string password);
+
+        IList<User> GetAllUsers();
     }
 }

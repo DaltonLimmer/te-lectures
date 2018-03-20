@@ -1,13 +1,15 @@
-﻿@model Forms.Web.Models.UserRegistrationModel
-
-@{
-    ViewBag.Title = "Registration";
-}
+﻿
+@model Forms.Web.Models.UserRegistrationModel
 
 <h2>Registration</h2>
 
 <form method="post" action="@Url.Action("Registration", "User")">
+
     @Html.TextBoxFor(m => m.Email, new { placeholder = "enter email" })
     @Html.PasswordFor(m => m.Password, new { placeholder = "enter password" })
-    <button>Register</button>
+    <input type="submit" value="Register" id="submitButton">
+
+
 </form>
+
+

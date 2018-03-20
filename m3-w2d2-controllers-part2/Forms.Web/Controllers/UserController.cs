@@ -1,4 +1,5 @@
-﻿using Forms.Web.Models;
+﻿using Forms.Web.DAL;
+using Forms.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,19 @@ namespace Forms.Web.Controllers
 {
     public class UserController : Controller
     {
+
+        private IUserDAL _dal;
+        public UserController(IUserDAL dal)
+        {
+            _dal = dal;
+        }
+
         /* STEPS
-         1. (UserController)    Create the registration action for user/registration
-         2. (Registration View) Create form w/button that submits POST request to user/registration
-         3. (UserController)    Create the registration action POST for user/registration & redirect to Success
-         4. (UserController)    Create success action for user/success
-         5. (Success View)      Create empty view
+         *1. (UserController)    Create the registration action for user/registration
+         *2. (Registration View) Create form w/button that submits POST request to user/registration
+         *3. (UserController)    Create the registration action POST for user/registration                                  & redirect to Success
+         *4. (UserController)    Create success action for user/success
+         *5. (Success View)      Create empty view
          5. TEST
          6. (UserRegistrationModel) Create a UserRegistrationModel that holds properties user register with
          7. (Registration View) Bind the view to a UserRegistrationModel
@@ -30,6 +38,7 @@ namespace Forms.Web.Controllers
         */
 
         // GET: User
+
         public ActionResult Registration()
         {
             return View();
@@ -38,13 +47,22 @@ namespace Forms.Web.Controllers
         [HttpPost]
         public ActionResult Registration(UserRegistrationModel model)
         {
-            // code that calls DAL
-            return RedirectToAction("Success"); 
+            User u = _dal.CreateUser(model.Email, model.Password);
+
+            return RedirectToAction("Success");
+
+            
         }
 
         public ActionResult Success()
         {
-            return View();
+            IList<User> users = _dal.GetAllUsers();
+            return View(users);
         }
+
+
+
+
+
     }
 }
