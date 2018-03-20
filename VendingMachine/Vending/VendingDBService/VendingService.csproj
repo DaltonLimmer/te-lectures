@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\InventoryManager.cs" />
     <Compile Include="Models\BaseItem.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="Models\InventoryItem.cs" />

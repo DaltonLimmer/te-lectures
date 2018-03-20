@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VendingService;
+using VendingService.Database;
+using VendingService.Interfaces;
+using VendingService.Mock;
+using VendingService.Models;
 
 namespace VendingRefiller
 {
     public class Refill
     {
-        private VendingDBService _db = new VendingDBService();
+        private IVendingService _db = new VendingDBService();
+        //private IVendingService _db = new MockVendingDBService();
 
         public void Start()
         {
@@ -56,11 +61,11 @@ namespace VendingRefiller
         private void AddProduct()
         {
             //Create object to hold transaction data
-            InventoryItem item = new InventoryItem();
+            VendingItem item = new VendingItem();
 
             //Category Table
             item.CategoryName = "TestCategory";
-            item.ConsumeMessage = "Test Munch Crumble Pop, Yuck!";
+            item.Noise = "Test Munch Crumble Pop, Yuck!";
 
             //Product Table
             item.ProductName = "Nasty Bites";
@@ -68,11 +73,11 @@ namespace VendingRefiller
 
             //Inventory Table
             item.Qty = 1;
-            item.RowLocation = 6;
-            item.ColumnLocation = 1;
+            item.Row = 6;
+            item.Column = 1;
 
             //Call method to insert rows in the three tables
-            _db.AddInventoryItem(item);
+            _db.AddVendingItem(item);
         }
 
         private void RefillLocation()
