@@ -1,0 +1,336 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using VendingService.Interfaces;
+using VendingService.Models;
+
+namespace VendingService.Mock
+{
+    public class MockVendingDBService : IVendingService
+    {
+        #region Variables
+
+        private Dictionary<int, CategoryItem> _categoryItems = new Dictionary<int, CategoryItem>();
+        private Dictionary<int, InventoryItem> _inventoryItems = new Dictionary<int, InventoryItem>();
+        private Dictionary<int, ProductItem> _productItems = new Dictionary<int, ProductItem>();
+        private Dictionary<int, VendingTransaction> _vendingTransactions = new Dictionary<int, VendingTransaction>();
+        private Dictionary<int, TransactionItem> _transactionItems = new Dictionary<int, TransactionItem>();
+
+        private int _categoryId = 1;
+        private int _productId = 1;
+        private int _inventoryId = 1;
+        private int _vendingTransactionId = 1;
+        private int _transactionItemId = 1;
+
+        #endregion
+
+        #region Vending
+
+        public List<VendingItem> GetVendingItems()
+        {
+            List<VendingItem> items = new List<VendingItem>();
+
+            try
+            {
+                foreach(InventoryItem item in _inventoryItems.Values.ToList())
+                {
+                    VendingItem vendingItem = new VendingItem();
+                    vendingItem.Inventory = item.Clone();
+                    vendingItem.Product = _productItems[item.ProductId].Clone();
+                    vendingItem.Category = _categoryItems[vendingItem.Product.CategoryId].Clone();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Mock database is corrupt. All inventory slots must contain a " +
+                                    "reference to a product and all products must contain a reference to a category.", ex);
+            }
+
+            return items;
+        }
+
+        #endregion
+
+        #region Category
+
+        public int AddCategoryItem(CategoryItem item)
+        {
+            item.Id = _categoryId++;
+            _categoryItems.Add(item.Id, item);
+            return item.Id;
+        }
+
+        public bool UpdateCategoryItem(CategoryItem item)
+        {
+            if(_categoryItems.ContainsKey(item.Id))
+            {
+                _categoryItems[item.Id] = item.Clone();
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+            return true;
+        }
+
+        public void DeleteCategoryItem(int categoryId)
+        {
+            if (_categoryItems.ContainsKey(categoryId))
+            {
+                _categoryItems.Remove(categoryId);
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+        }
+
+        public CategoryItem GetCategoryItem(int categoryId)
+        {
+            CategoryItem item = null;
+
+            if (_categoryItems.ContainsKey(categoryId))
+            {
+                item = _categoryItems[categoryId];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item.Clone();
+        }
+
+        public List<CategoryItem> GetCategoryItems()
+        {
+            List<CategoryItem> items = new List<CategoryItem>();
+            foreach(var item in _categoryItems)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
+        }
+
+        #endregion
+
+        #region Inventory
+
+        public int AddInventoryItem(InventoryItem item)
+        {
+            item.Id = _inventoryId++;
+            _inventoryItems.Add(item.Id, item.Clone());
+            return item.Id;
+        }
+
+        public bool UpdateInventoryItem(InventoryItem item)
+        {
+            if (_inventoryItems.ContainsKey(item.Id))
+            {
+                _inventoryItems[item.Id] = item.Clone();
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+            return true;
+        }
+
+        public void DeleteInventoryItem(int inventoryId)
+        {
+            if (_inventoryItems.ContainsKey(inventoryId))
+            {
+                _inventoryItems.Remove(inventoryId);
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+        }
+
+        public InventoryItem GetInventoryItem(int inventoryId)
+        {
+            InventoryItem item = null;
+
+            if (_inventoryItems.ContainsKey(inventoryId))
+            {
+                item = _inventoryItems[inventoryId];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item.Clone();
+        }
+
+        public List<InventoryItem> GetInventoryItems()
+        {
+            List<InventoryItem> items = new List<InventoryItem>();
+            foreach (var item in _inventoryItems)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
+        }
+
+        #endregion
+
+        #region Product
+
+        public int AddProductItem(ProductItem item)
+        {
+            item.Id = _productId++;
+            _productItems.Add(item.Id, item.Clone());
+            return item.Id;
+        }
+
+        public bool UpdateProductItem(ProductItem item)
+        {
+            if (_productItems.ContainsKey(item.Id))
+            {
+                _productItems[item.Id] = item.Clone();
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+            return true;
+        }
+
+        public void DeleteProductItem(int inventoryId)
+        {
+            if (_productItems.ContainsKey(inventoryId))
+            {
+                _productItems.Remove(inventoryId);
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+        }
+
+        public ProductItem GetProductItem(int inventoryId)
+        {
+            ProductItem item = null;
+
+            if (_productItems.ContainsKey(inventoryId))
+            {
+                item = _productItems[inventoryId];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item.Clone();
+        }
+
+        public List<ProductItem> GetProductItems()
+        {
+            List<ProductItem> items = new List<ProductItem>();
+            foreach (var item in _productItems)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
+        }
+
+        #endregion
+
+        #region VendingTransaction
+
+        public int AddVendingTransaction(VendingTransaction item)
+        {
+            item.Id = _vendingTransactionId++;
+            _vendingTransactions.Add(item.Id, item.Clone());
+            return item.Id;
+        }
+
+        public VendingTransaction GetVendingTransaction(int id)
+        {
+            VendingTransaction item = null;
+
+            if (_vendingTransactions.ContainsKey(id))
+            {
+                item = _vendingTransactions[id];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item.Clone();
+        }
+
+        public List<VendingTransaction> GetVendingTransactions()
+        {
+            List<VendingTransaction> items = new List<VendingTransaction>();
+            foreach (var item in _vendingTransactions)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
+        }
+
+        #endregion
+
+        #region TransactionItem
+
+        public int AddTransactionItem(TransactionItem item)
+        {
+            item.Id = _transactionItemId++;
+            _transactionItems.Add(item.Id, item.Clone());
+            return item.Id;
+        }
+
+        public TransactionItem GetTransactionItem(int transactionItemId)
+        {
+            TransactionItem item = null;
+
+            if (_transactionItems.ContainsKey(transactionItemId))
+            {
+                item = _transactionItems[transactionItemId];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item.Clone();
+        }
+
+        public List<TransactionItem> GetTransactionItems(int vendingTransactionId)
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+
+
+            foreach (var item in _transactionItems.Values.ToList())
+            {
+                if (item.VendingTransactionId == vendingTransactionId)
+                {
+                    items.Add(item.Clone());
+                }
+                else
+                {
+                    throw new Exception("Item does not exist.");
+                }
+            }
+
+            return items;
+        }
+
+        public List<TransactionItem> GetTransactionItems()
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+            foreach (var item in _transactionItems)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
+        }
+
+        #endregion
+    }
+}

@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingService", "VendingDBService\VendingService.csproj", "{FEB96358-C177-4C6E-8DDA-F59444A0B7DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingRefiller", "VendingRefiller\VendingRefiller.csproj", "{03611618-966A-45BA-A7AB-D667F58DA22B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingIntegrationTests", "VendingIntegrationTests\VendingIntegrationTests.csproj", "{FE07D77A-4A4F-40D5-8D04-07CCE5AEBAC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingConsole", "VendingConsole\VendingConsole.csproj", "{2201E482-75D3-4058-8AC8-9D92A5A2B7F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,15 +19,19 @@ Global
 		{FEB96358-C177-4C6E-8DDA-F59444A0B7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEB96358-C177-4C6E-8DDA-F59444A0B7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEB96358-C177-4C6E-8DDA-F59444A0B7DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03611618-966A-45BA-A7AB-D667F58DA22B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03611618-966A-45BA-A7AB-D667F58DA22B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03611618-966A-45BA-A7AB-D667F58DA22B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03611618-966A-45BA-A7AB-D667F58DA22B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE07D77A-4A4F-40D5-8D04-07CCE5AEBAC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE07D77A-4A4F-40D5-8D04-07CCE5AEBAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE07D77A-4A4F-40D5-8D04-07CCE5AEBAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE07D77A-4A4F-40D5-8D04-07CCE5AEBAC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2201E482-75D3-4058-8AC8-9D92A5A2B7F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2201E482-75D3-4058-8AC8-9D92A5A2B7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2201E482-75D3-4058-8AC8-9D92A5A2B7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2201E482-75D3-4058-8AC8-9D92A5A2B7F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6C242A45-330F-4250-946D-9F2AB78E2CDD}
+		SolutionGuid = {B7A009C2-D12B-4804-B62A-B453A48D13BA}
 	EndGlobalSection
 EndGlobal
