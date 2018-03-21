@@ -10,93 +10,214 @@ namespace VendingService.Mock
 {
     public class MockVendingDBService : IVendingService
     {
-        List<CategoryItem> _categoryItems = new List<CategoryItem>();
-        List<InventoryItem> _inventoryItems = new List<InventoryItem>();
-        List<ProductItem> _productItems = new List<ProductItem>();
+        #region Variables
 
-        public MockVendingDBService()
-        {
-            
-        }
+        private Dictionary<int, CategoryItem> _categoryItems = new Dictionary<int, CategoryItem>();
+        private Dictionary<int, InventoryItem> _inventoryItems = new Dictionary<int, InventoryItem>();
+        private Dictionary<int, ProductItem> _productItems = new Dictionary<int, ProductItem>();
 
-        public int AddCategoryItem(CategoryItem item)
-        {
-            throw new NotImplementedException();
-        }
+        private int _categoryId = 1;
+        private int _productId = 1;
+        private int _inventoryId = 1;
 
-        public int AddInventoryItem(InventoryItem item)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
-        public int AddProductItem(ProductItem item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteCategoryItem(int categoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteInventoryItem(int inventoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteProductItem(int inventoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CategoryItem GetCategoryItem(int categoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<CategoryItem> GetCategoryItems()
-        {
-            throw new NotImplementedException();
-        }
-
-        public InventoryItem GetInventoryItem(int inventoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<InventoryItem> GetInventoryItems()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ProductItem GetProductItem(int inventoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ProductItem> GetProductItems()
-        {
-            throw new NotImplementedException();
-        }
+        #region Vending
 
         public List<VendingItem> GetVendingItems()
         {
-            throw new NotImplementedException();
+            List<VendingItem> items = new List<VendingItem>();
+
+            try
+            {
+                foreach(InventoryItem item in _inventoryItems.Values.ToList())
+                {
+                    VendingItem vendingItem = new VendingItem();
+                    vendingItem.Inventory = item;
+                    vendingItem.Product = _productItems[item.ProductId];
+                    vendingItem.Category = _categoryItems[vendingItem.Product.CategoryId];
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Mock database is corrupt. All inventory slots must contain a " +
+                                    "reference to a product and all products must contain a reference to a category.", ex);
+            }
+
+            return items;
+        }
+
+        #endregion
+
+        #region Category
+
+        public int AddCategoryItem(CategoryItem item)
+        {
+            item.Id = _categoryId++;
+            _categoryItems.Add(item.Id, item);
+            return item.Id;
         }
 
         public bool UpdateCategoryItem(CategoryItem item)
         {
-            throw new NotImplementedException();
+            if(_categoryItems.ContainsKey(item.Id))
+            {
+                _categoryItems[item.Id] = item;
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+            return true;
+        }
+
+        public void DeleteCategoryItem(int categoryId)
+        {
+            if (_categoryItems.ContainsKey(categoryId))
+            {
+                _categoryItems.Remove(categoryId);
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+        }
+
+        public CategoryItem GetCategoryItem(int categoryId)
+        {
+            CategoryItem item = null;
+
+            if (_categoryItems.ContainsKey(categoryId))
+            {
+                item = _categoryItems[categoryId];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item;
+        }
+
+        public List<CategoryItem> GetCategoryItems()
+        {
+            return _categoryItems.Values.ToList();
+        }
+
+        #endregion
+
+        #region Inventory
+
+        public int AddInventoryItem(InventoryItem item)
+        {
+            item.Id = _inventoryId++;
+            _inventoryItems.Add(item.Id, item);
+            return item.Id;
         }
 
         public bool UpdateInventoryItem(InventoryItem item)
         {
-            throw new NotImplementedException();
+            if (_inventoryItems.ContainsKey(item.Id))
+            {
+                _inventoryItems[item.Id] = item;
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+            return true;
+        }
+
+        public void DeleteInventoryItem(int inventoryId)
+        {
+            if (_inventoryItems.ContainsKey(inventoryId))
+            {
+                _inventoryItems.Remove(inventoryId);
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+        }
+
+        public InventoryItem GetInventoryItem(int inventoryId)
+        {
+            InventoryItem item = null;
+
+            if (_inventoryItems.ContainsKey(inventoryId))
+            {
+                item = _inventoryItems[inventoryId];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item;
+        }
+
+        public List<InventoryItem> GetInventoryItems()
+        {
+            return _inventoryItems.Values.ToList();
+        }
+
+        #endregion
+
+        #region Product
+
+        public int AddProductItem(ProductItem item)
+        {
+            item.Id = _productId++;
+            _productItems.Add(item.Id, item);
+            return item.Id;
         }
 
         public bool UpdateProductItem(ProductItem item)
         {
-            throw new NotImplementedException();
+            if (_productItems.ContainsKey(item.Id))
+            {
+                _productItems[item.Id] = item;
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+            return true;
         }
+
+        public void DeleteProductItem(int inventoryId)
+        {
+            if (_productItems.ContainsKey(inventoryId))
+            {
+                _productItems.Remove(inventoryId);
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+        }
+
+        public ProductItem GetProductItem(int inventoryId)
+        {
+            ProductItem item = null;
+
+            if (_productItems.ContainsKey(inventoryId))
+            {
+                item = _productItems[inventoryId];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item;
+        }
+
+        public List<ProductItem> GetProductItems()
+        {
+            return _productItems.Values.ToList();
+        }
+
+        #endregion
     }
 }
