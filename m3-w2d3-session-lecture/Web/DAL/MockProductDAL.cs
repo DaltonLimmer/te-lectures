@@ -6,7 +6,7 @@ using Web.Models;
 
 namespace Web.DAL
 {
-    public class MockProductDAL
+    public class MockProductDAL : IProductDAL /* Step 3 Create interface and implement */
     {
         public Product GetProduct(int id)
         {

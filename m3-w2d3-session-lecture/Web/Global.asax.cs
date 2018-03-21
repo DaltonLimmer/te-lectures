@@ -24,7 +24,8 @@ namespace Web
         {
             var kernel = new StandardKernel();
 
-            
+            /* Step 3B - Add binding statement */
+            kernel.Bind<IProductDAL>().To<MockProductDAL>();
 
             return kernel;
         }

@@ -1,0 +1,43 @@
+﻿
+@* Step 10 - Create ViewCart View *@
+
+<h1>Shopping Cart</h1>
+
+@using Web.Models
+@model ShoppingCart
+
+
+@* Step 15 - Display Items in the Cart *@
+
+<table>
+    <tr>
+        <td></td>
+        <td>Item</td>
+        <td>Cost</td>
+        <td>Quantity</td>
+    </tr>
+
+    @foreach(ShoppingCartItem item in Model.Items)
+    {
+        <tr>
+            <td>
+                @* Remove Item *@
+                <form method="post" action="@Url.Action("ViewCart", "Store")">
+                    <input type="hidden" name="productId" value="@item.Product.Id" />
+                    <input type="submit" value="Remove" />
+                </form>
+            </td>
+            <td>@item.Product.Name</td>
+            <td>@item.Product.Cost.ToString("C")</td>
+            <td>@item.Quantity</td>
+
+        </tr>
+
+    }
+
+</table>
+
+<strong>The total cost of your order is: @Model.GetTotalCost().ToString("C")</strong>
+
+
+

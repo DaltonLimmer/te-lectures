@@ -1,0 +1,47 @@
+﻿
+@* Step 2 - Create View *@
+
+
+<h1>Store Index Page</h1>
+
+@using Web.Models
+@model IList<Product>
+
+
+
+@* Step 6: Display Products *@
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Cost</th>
+        <th></th>
+    </tr>
+    
+    @foreach(Product product in Model)
+    {
+        
+    <tr>
+        <td>@product.Id</td>
+        <td>@product.Name</td>
+        <td>@product.Cost.ToString("C")</td>
+        <td>
+
+            @* Step 7 - Add Form Tag w/ AddToCart button > POST to store/index; Pass Product Id in Form *@
+            <form method="post" action="@Url.Action("Index", "Store")">
+                <input type="hidden" name="productId" value="@product.Id" />
+                <input type="submit" value="Add To Cart" />
+            </form>
+
+        </td>
+
+    </tr>
+
+
+    }
+
+
+
+</table>
+
