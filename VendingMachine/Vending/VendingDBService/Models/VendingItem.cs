@@ -16,5 +16,14 @@ namespace VendingService.Models
         {
             return $"[{Inventory.Row},{Inventory.Column}] Qty:{Inventory.Qty} Product:{Product.Name} Category:{Category.Name}";
         }
+
+        public VendingItem Clone()
+        {
+            VendingItem item = new VendingItem();
+            item.Inventory = this.Inventory.Clone();
+            item.Category = this.Category.Clone();
+            item.Product = this.Product.Clone();
+            return item;
+        }
     }
 }

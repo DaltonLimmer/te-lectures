@@ -33,5 +33,16 @@ namespace VendingService.Interfaces
         ProductItem GetProductItem(int inventoryId);
         List<ProductItem> GetProductItems();
 
+        //VendingTransaction
+        int AddVendingTransaction(VendingTransaction item);
+        VendingTransaction GetVendingTransaction(int id);
+        List<VendingTransaction> GetVendingTransactions();
+
+        //TransactionItem
+        int AddTransactionItem(TransactionItem item);
+        TransactionItem GetTransactionItem(int transactionItemId);
+        List<TransactionItem> GetTransactionItems(int vendingTransactionId);
+        List<TransactionItem> GetTransactionItems();
+
     }
 }

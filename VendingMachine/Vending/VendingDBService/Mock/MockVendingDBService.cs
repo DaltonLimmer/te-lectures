@@ -15,10 +15,14 @@ namespace VendingService.Mock
         private Dictionary<int, CategoryItem> _categoryItems = new Dictionary<int, CategoryItem>();
         private Dictionary<int, InventoryItem> _inventoryItems = new Dictionary<int, InventoryItem>();
         private Dictionary<int, ProductItem> _productItems = new Dictionary<int, ProductItem>();
+        private Dictionary<int, VendingTransaction> _vendingTransactions = new Dictionary<int, VendingTransaction>();
+        private Dictionary<int, TransactionItem> _transactionItems = new Dictionary<int, TransactionItem>();
 
         private int _categoryId = 1;
         private int _productId = 1;
         private int _inventoryId = 1;
+        private int _vendingTransactionId = 1;
+        private int _transactionItemId = 1;
 
         #endregion
 
@@ -33,9 +37,9 @@ namespace VendingService.Mock
                 foreach(InventoryItem item in _inventoryItems.Values.ToList())
                 {
                     VendingItem vendingItem = new VendingItem();
-                    vendingItem.Inventory = item;
-                    vendingItem.Product = _productItems[item.ProductId];
-                    vendingItem.Category = _categoryItems[vendingItem.Product.CategoryId];
+                    vendingItem.Inventory = item.Clone();
+                    vendingItem.Product = _productItems[item.ProductId].Clone();
+                    vendingItem.Category = _categoryItems[vendingItem.Product.CategoryId].Clone();
                 }
             }
             catch(Exception ex)
@@ -62,7 +66,7 @@ namespace VendingService.Mock
         {
             if(_categoryItems.ContainsKey(item.Id))
             {
-                _categoryItems[item.Id] = item;
+                _categoryItems[item.Id] = item.Clone();
             }
             else
             {
@@ -96,12 +100,17 @@ namespace VendingService.Mock
                 throw new Exception("Item does not exist.");
             }
 
-            return item;
+            return item.Clone();
         }
 
         public List<CategoryItem> GetCategoryItems()
         {
-            return _categoryItems.Values.ToList();
+            List<CategoryItem> items = new List<CategoryItem>();
+            foreach(var item in _categoryItems)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
         }
 
         #endregion
@@ -111,7 +120,7 @@ namespace VendingService.Mock
         public int AddInventoryItem(InventoryItem item)
         {
             item.Id = _inventoryId++;
-            _inventoryItems.Add(item.Id, item);
+            _inventoryItems.Add(item.Id, item.Clone());
             return item.Id;
         }
 
@@ -119,7 +128,7 @@ namespace VendingService.Mock
         {
             if (_inventoryItems.ContainsKey(item.Id))
             {
-                _inventoryItems[item.Id] = item;
+                _inventoryItems[item.Id] = item.Clone();
             }
             else
             {
@@ -153,12 +162,17 @@ namespace VendingService.Mock
                 throw new Exception("Item does not exist.");
             }
 
-            return item;
+            return item.Clone();
         }
 
         public List<InventoryItem> GetInventoryItems()
         {
-            return _inventoryItems.Values.ToList();
+            List<InventoryItem> items = new List<InventoryItem>();
+            foreach (var item in _inventoryItems)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
         }
 
         #endregion
@@ -168,7 +182,7 @@ namespace VendingService.Mock
         public int AddProductItem(ProductItem item)
         {
             item.Id = _productId++;
-            _productItems.Add(item.Id, item);
+            _productItems.Add(item.Id, item.Clone());
             return item.Id;
         }
 
@@ -176,7 +190,7 @@ namespace VendingService.Mock
         {
             if (_productItems.ContainsKey(item.Id))
             {
-                _productItems[item.Id] = item;
+                _productItems[item.Id] = item.Clone();
             }
             else
             {
@@ -210,12 +224,111 @@ namespace VendingService.Mock
                 throw new Exception("Item does not exist.");
             }
 
-            return item;
+            return item.Clone();
         }
 
         public List<ProductItem> GetProductItems()
         {
-            return _productItems.Values.ToList();
+            List<ProductItem> items = new List<ProductItem>();
+            foreach (var item in _productItems)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
+        }
+
+        #endregion
+
+        #region VendingTransaction
+
+        public int AddVendingTransaction(VendingTransaction item)
+        {
+            item.Id = _vendingTransactionId++;
+            _vendingTransactions.Add(item.Id, item.Clone());
+            return item.Id;
+        }
+
+        public VendingTransaction GetVendingTransaction(int id)
+        {
+            VendingTransaction item = null;
+
+            if (_vendingTransactions.ContainsKey(id))
+            {
+                item = _vendingTransactions[id];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item.Clone();
+        }
+
+        public List<VendingTransaction> GetVendingTransactions()
+        {
+            List<VendingTransaction> items = new List<VendingTransaction>();
+            foreach (var item in _vendingTransactions)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
+        }
+
+        #endregion
+
+        #region TransactionItem
+
+        public int AddTransactionItem(TransactionItem item)
+        {
+            item.Id = _transactionItemId++;
+            _transactionItems.Add(item.Id, item.Clone());
+            return item.Id;
+        }
+
+        public TransactionItem GetTransactionItem(int transactionItemId)
+        {
+            TransactionItem item = null;
+
+            if (_transactionItems.ContainsKey(transactionItemId))
+            {
+                item = _transactionItems[transactionItemId];
+            }
+            else
+            {
+                throw new Exception("Item does not exist.");
+            }
+
+            return item.Clone();
+        }
+
+        public List<TransactionItem> GetTransactionItems(int vendingTransactionId)
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+
+
+            foreach (var item in _transactionItems.Values.ToList())
+            {
+                if (item.VendingTransactionId == vendingTransactionId)
+                {
+                    items.Add(item.Clone());
+                }
+                else
+                {
+                    throw new Exception("Item does not exist.");
+                }
+            }
+
+            return items;
+        }
+
+        public List<TransactionItem> GetTransactionItems()
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+            foreach (var item in _transactionItems)
+            {
+                items.Add(item.Value.Clone());
+            }
+            return items;
         }
 
         #endregion

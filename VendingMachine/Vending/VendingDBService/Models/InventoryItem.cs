@@ -20,5 +20,16 @@ namespace VendingService.Models
                 return $"{Row},{Column}";
             }
         }
+
+        public InventoryItem Clone()
+        {
+            InventoryItem item = new InventoryItem();
+            item.Id = this.Id;
+            item.Column = this.Column;
+            item.Row = this.Row;
+            item.Qty = this.Qty;
+            item.ProductId = this.ProductId;
+            return item;
+        }
     }
 }

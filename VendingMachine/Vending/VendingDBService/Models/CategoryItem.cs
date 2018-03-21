@@ -10,5 +10,14 @@ namespace VendingService.Models
     {
         public string Name { get; set; }
         public string Noise { get; set; }
+
+        public CategoryItem Clone()
+        {
+            CategoryItem item = new CategoryItem();
+            item.Id = this.Id;
+            item.Name = this.Name;
+            item.Noise = this.Noise;
+            return item;
+        }
     }
 }

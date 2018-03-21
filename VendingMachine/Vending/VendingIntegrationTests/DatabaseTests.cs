@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VendingService.Database;
+using VendingService.Interfaces;
+using VendingService.Mock;
 using VendingService.Models;
 
 namespace VendingIntegrationTests
@@ -10,21 +12,15 @@ namespace VendingIntegrationTests
     [TestClass()]
     public class DatabaseTests
     {
-        private TransactionScope tran;      //<-- used to begin a transaction during initialize and rollback during cleanup
-        private VendingDBService _db = new VendingDBService();
+        //Used to begin a transaction during initialize and rollback during cleanup
+        private TransactionScope tran;  
+        private IVendingService _db = new VendingDBService();
+        //private IVendingService _db = new MockVendingDBService();
 
-        private const string CategoryName = "TestCategory";
-        private const string CategoryNoise = "CategoryNoise";
         private int _categoryId = BaseItem.InvalidId;
-
-        private const string ProductName = "TestProduct";
-        private const double ProductPrice = 0.50;
         private int _productId = BaseItem.InvalidId;
-
-        private const int InventoryRow = 1;
-        private const int InventoryCol = 1;
-        private const int InventoryQty = 10;
         private int _inventoryId = BaseItem.InvalidId;
+        private int _vendingTransactionId = BaseItem.InvalidId;
 
         /// <summary>
         /// Set up the database before each test  
@@ -39,28 +35,39 @@ namespace VendingIntegrationTests
             _categoryId = _db.AddCategoryItem(
                 new CategoryItem()
                 {
-                    Name = CategoryName,
-                    Noise = CategoryNoise
+                    Name = "TestCategory",
+                    Noise = "CategoryNoise"
                 });
+            Assert.AreNotEqual(0, _categoryId);
 
             // Add product item
             _productId = _db.AddProductItem(
                 new ProductItem()
                 {
-                    Name = ProductName,
-                    Price = ProductPrice,
+                    Name = "TestProduct",
+                    Price = 0.50,
                     CategoryId = _categoryId
                 });
+            Assert.AreNotEqual(0, _productId);
 
             // Add inventory item
             _inventoryId = _db.AddInventoryItem(
                 new InventoryItem()
                 {
-                    Row = InventoryRow,
-                    Column = InventoryCol,
-                    Qty = InventoryQty,
+                    Row = 1,
+                    Column = 1,
+                    Qty = 4,
                     ProductId = _productId
                 });
+            Assert.AreNotEqual(0, _inventoryId);
+
+            // Add vending transaction
+            _vendingTransactionId = _db.AddVendingTransaction(
+                new VendingTransaction()
+                {
+                    Date = DateTime.UtcNow
+                });
+            Assert.AreNotEqual(0, _vendingTransactionId);
         }
 
         /// <summary>
@@ -87,6 +94,7 @@ namespace VendingIntegrationTests
             Assert.AreNotEqual(0, id);
 
             ProductItem itemGet = _db.GetProductItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
             Assert.AreEqual(item.Name, itemGet.Name);
             Assert.AreEqual(item.Price, itemGet.Price);
             Assert.AreEqual(item.CategoryId, itemGet.CategoryId);
@@ -97,6 +105,7 @@ namespace VendingIntegrationTests
             Assert.IsTrue(_db.UpdateProductItem(item));
 
             itemGet = _db.GetProductItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
             Assert.AreEqual(item.Name, itemGet.Name);
             Assert.AreEqual(item.Price, itemGet.Price);
             Assert.AreEqual(item.CategoryId, itemGet.CategoryId);
@@ -124,6 +133,7 @@ namespace VendingIntegrationTests
             Assert.AreNotEqual(0, id);
 
             CategoryItem itemGet = _db.GetCategoryItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
             Assert.AreEqual(item.Name, itemGet.Name);
             Assert.AreEqual(item.Noise, itemGet.Noise);
 
@@ -133,6 +143,7 @@ namespace VendingIntegrationTests
             Assert.IsTrue(_db.UpdateCategoryItem(item));
 
             itemGet = _db.GetCategoryItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
             Assert.AreEqual(item.Name, itemGet.Name);
             Assert.AreEqual(item.Noise, itemGet.Noise);
 
@@ -161,6 +172,7 @@ namespace VendingIntegrationTests
             Assert.AreNotEqual(0, id);
 
             InventoryItem itemGet = _db.GetInventoryItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
             Assert.AreEqual(item.Column, itemGet.Column);
             Assert.AreEqual(item.Row, itemGet.Row);
             Assert.AreEqual(item.Qty, itemGet.Qty);
@@ -173,6 +185,7 @@ namespace VendingIntegrationTests
             Assert.IsTrue(_db.UpdateInventoryItem(item));
 
             itemGet = _db.GetInventoryItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
             Assert.AreEqual(item.Column, itemGet.Column);
             Assert.AreEqual(item.Row, itemGet.Row);
             Assert.AreEqual(item.Qty, itemGet.Qty);
@@ -185,6 +198,91 @@ namespace VendingIntegrationTests
             {
                 Assert.AreNotEqual(id, inventoryItem.Id);
             }
+        }
+
+        /// <summary>
+        /// Tests the vending transaction POCO methods
+        /// </summary>
+        [TestMethod()]
+        public void TestVendingTransaction()
+        {
+            // Test add vending transaction
+            VendingTransaction item = new VendingTransaction();
+            item.Date = DateTime.UtcNow;
+            int id = _db.AddVendingTransaction(item);
+            Assert.AreNotEqual(0, id);
+
+            VendingTransaction itemGet = _db.GetVendingTransaction(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
+            Assert.AreEqual(item.Date.ToString(), itemGet.Date.ToString());
+
+            // Test get vending transactions
+            item = new VendingTransaction();
+            item.Date = DateTime.UtcNow;
+            int id2 = _db.AddVendingTransaction(item);
+            Assert.AreNotEqual(0, id2);
+
+            var vendingItems = _db.GetVendingTransactions();
+            bool foundItem1 = false;
+            bool foundItem2 = false;
+            foreach (var vendingItem in vendingItems)
+            {
+                if(vendingItem.Id == id)
+                {
+                    foundItem1 = true;
+                }
+                else if(vendingItem.Id == id2)
+                {
+                    foundItem2 = true;
+                }
+            }
+            Assert.IsTrue(foundItem1);
+            Assert.IsTrue(foundItem2);
+        }
+
+        /// <summary>
+        /// Tests the transaction item POCO methods
+        /// </summary>
+        [TestMethod()]
+        public void TestTransactionItems()
+        {
+            // Test add transaction item
+            TransactionItem item = new TransactionItem();
+            item.ProductId = _productId;
+            item.VendingTransactionId = _vendingTransactionId;
+            item.SalePrice = 0.46;
+            int id = _db.AddTransactionItem(item);
+            Assert.AreNotEqual(0, id);
+
+            TransactionItem itemGet = _db.GetTransactionItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
+            Assert.AreEqual(item.ProductId, itemGet.ProductId);
+            Assert.AreEqual(item.VendingTransactionId, itemGet.VendingTransactionId);
+            Assert.AreEqual(item.SalePrice.ToString("c"), itemGet.SalePrice.ToString("c"));
+
+            // Test get transaction items
+            var transactionItems = _db.GetTransactionItems();
+            bool foundItem = false;
+            foreach (var transactionItem in transactionItems)
+            {
+                if (transactionItem.Id == id)
+                {
+                    foundItem = true;
+                }
+            }
+            Assert.IsTrue(foundItem);
+
+            // Test get transaction items by vending transaction id
+            transactionItems = _db.GetTransactionItems(_vendingTransactionId);
+            foundItem = false;
+            foreach (var transactionItem in transactionItems)
+            {
+                if (transactionItem.Id == id)
+                {
+                    foundItem = true;
+                }
+            }
+            Assert.IsTrue(foundItem);
         }
     }
 }

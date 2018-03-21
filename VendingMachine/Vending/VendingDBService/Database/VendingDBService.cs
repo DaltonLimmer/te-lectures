@@ -402,5 +402,170 @@ namespace VendingService.Database
         }
         #endregion
 
+        #region VendingTransaction Methods
+
+        public int AddVendingTransaction(VendingTransaction item)
+        {
+            const string sql = "INSERT VendingTransaction (Date) VALUES (@Date);";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(sql + _getLastIdSQL, conn);
+                cmd.Parameters.AddWithValue("@Date", item.Date);
+                item.Id = (int)cmd.ExecuteScalar();
+            }
+
+            return item.Id;
+        }
+
+        public VendingTransaction GetVendingTransaction(int id)
+        {
+            VendingTransaction item = new VendingTransaction();
+            const string sql = "SELECT * FROM VendingTransaction WHERE Id = @Id;";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Id", id);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    item = GetVendingTransactionFromReader(reader);
+                }
+            }
+
+            return item;
+        }
+
+        public List<VendingTransaction> GetVendingTransactions()
+        {
+            List<VendingTransaction> items = new List<VendingTransaction>();
+            const string sql = "SELECT * FROM VendingTransaction;";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    items.Add(GetVendingTransactionFromReader(reader));
+                }
+            }
+
+            return items;
+        }
+
+        private VendingTransaction GetVendingTransactionFromReader(SqlDataReader reader)
+        {
+            VendingTransaction item = new VendingTransaction();
+
+            item.Id = Convert.ToInt32(reader["Id"]);
+            item.Date = Convert.ToDateTime(reader["Date"]);
+
+            return item;
+        }
+
+        #endregion
+
+        #region TransactionItem Methods
+
+        public int AddTransactionItem(TransactionItem item)
+        {
+            const string sql = "INSERT TransactionItem (VendingTransactionId, ProductId, SalePrice) " +
+                               "VALUES (@VendingTransactionId, @ProductId, @SalePrice);";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(sql + _getLastIdSQL, conn);
+                cmd.Parameters.AddWithValue("@VendingTransactionId", item.VendingTransactionId);
+                cmd.Parameters.AddWithValue("@ProductId", item.ProductId);
+                cmd.Parameters.AddWithValue("@SalePrice", item.SalePrice);
+                item.Id = (int)cmd.ExecuteScalar();
+            }
+
+            return item.Id;
+        }
+
+        public TransactionItem GetTransactionItem(int transactionItemId)
+        {
+            TransactionItem item = new TransactionItem();
+            const string sql = "SELECT * FROM TransactionItem WHERE Id = @Id;";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Id", transactionItemId);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    item = GetTransactionItemsFromReader(reader);
+                }
+            }
+
+            return item;
+        }
+
+        public List<TransactionItem> GetTransactionItems(int vendingTransactionId)
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+            const string sql = "SELECT * FROM TransactionItem WHERE VendingTransactionId = @Id;";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Id", vendingTransactionId);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    items.Add(GetTransactionItemsFromReader(reader));
+                }
+            }
+
+            return items;
+        }
+
+        public List<TransactionItem> GetTransactionItems()
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+            const string sql = "SELECT * FROM TransactionItem;";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    items.Add(GetTransactionItemsFromReader(reader));
+                }
+            }
+
+            return items;
+        }
+
+        private TransactionItem GetTransactionItemsFromReader(SqlDataReader reader)
+        {
+            TransactionItem item = new TransactionItem();
+
+            item.Id = Convert.ToInt32(reader["Id"]);
+            item.VendingTransactionId = Convert.ToInt32(reader["VendingTransactionId"]);
+            item.ProductId = Convert.ToInt32(reader["ProductId"]);
+            item.SalePrice = Convert.ToDouble(reader["SalePrice"]);
+
+            return item;
+        }
+
+        #endregion
     }
 }
