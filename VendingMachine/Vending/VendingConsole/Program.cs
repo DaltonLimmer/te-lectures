@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VendingService.Database;
 using VendingService.Helpers;
+using VendingService.Models;
 
 namespace VendingConsole
 {
@@ -23,6 +24,19 @@ namespace VendingConsole
                     Console.WriteLine(inventory.GetVendingItem(rowIdx, colIdx).ToString());
                 }
             }
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            ReportManager reportManager = new ReportManager();
+            Report report = reportManager.GetReport(2018, db.GetProductItems());
+            var reportItems = report.ReportItems;
+            foreach (var item in reportItems)
+            {
+                Console.WriteLine($"{item.Name}|{item.Qty}");
+            }
+            Console.WriteLine();
+            Console.WriteLine($"**Total Sales** {report.TotalSales.ToString("c")}");
 
             Console.ReadKey();
         }

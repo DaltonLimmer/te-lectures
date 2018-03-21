@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VendingService.Database;
 using VendingService.Interfaces;
+using VendingService.Models;
 
 namespace VendingService.Helpers
 {
@@ -12,13 +13,10 @@ namespace VendingService.Helpers
     {
         private IVendingService _db = new VendingDBService();
 
-        public string GetReport(int year)
+        public Report GetReport(int year, List<ProductItem> products)
         {
-            string report = "";
-
-            
-
-
+            var transItems = _db.GetTransactionItemsForYear(year);
+            Report report = new Report(transItems, products);
             return report;
         }
     }

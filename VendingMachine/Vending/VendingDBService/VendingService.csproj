@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\IVendingService.cs" />
     <Compile Include="Mock\MockVendingDBService.cs" />
     <Compile Include="Models\ProductItem.cs" />
+    <Compile Include="Models\Report.cs" />
     <Compile Include="Models\TransactionItem.cs" />
     <Compile Include="Models\VendingItem.cs" />
     <Compile Include="Models\VendingTransaction.cs" />

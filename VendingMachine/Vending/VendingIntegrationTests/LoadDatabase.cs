@@ -15,7 +15,7 @@ namespace VendingIntegrationTests
         public void PopulateDatabase()
         {
             //PopulateDatabaseWithInventory();
-            //PopulateDatabaseWithTransactions();
+            PopulateDatabaseWithTransactions();
         }
 
         private void PopulateDatabaseWithInventory()
