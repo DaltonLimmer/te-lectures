@@ -552,6 +552,29 @@ namespace VendingService.Database
             }
 
             return items;
+        }        
+
+        public List<TransactionItem> GetTransactionItemsForYear(int year)
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+            const string sql = "SELECT * FROM TransactionItem " +
+                               "Join VendingTransaction On VendingTransaction.Id = TransactionItem.VendingTransactionId " +
+                               "WHERE YEAR(Date) = @Year;";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Year", year);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    items.Add(GetTransactionItemsFromReader(reader));
+                }
+            }
+
+            return items;
         }
 
         private TransactionItem GetTransactionItemsFromReader(SqlDataReader reader)

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\InventoryManager.cs" />
+    <Compile Include="Helpers\ReportManager.cs" />
     <Compile Include="Models\BaseItem.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="Models\InventoryItem.cs" />

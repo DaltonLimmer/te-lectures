@@ -331,6 +331,25 @@ namespace VendingService.Mock
             return items;
         }
 
+        public List<TransactionItem> GetTransactionItemsForYear(int year)
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+
+            List<VendingTransaction> vendTrans = _vendingTransactions.Values.ToList();
+            foreach (VendingTransaction vendItem in vendTrans)
+            {
+                if (vendItem.Date.Year == year)
+                {
+                    List<TransactionItem> transItems = GetTransactionItems(vendItem.Id);
+                    foreach (var transItem in transItems)
+                    {
+                        items.Add(transItem.Clone());
+                    }
+                }
+            }
+            return items;
+        }
+
         #endregion
     }
 }

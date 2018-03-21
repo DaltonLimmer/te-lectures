@@ -43,6 +43,7 @@ namespace VendingService.Interfaces
         TransactionItem GetTransactionItem(int transactionItemId);
         List<TransactionItem> GetTransactionItems(int vendingTransactionId);
         List<TransactionItem> GetTransactionItems();
+        List<TransactionItem> GetTransactionItemsForYear(int year);
 
     }
 }

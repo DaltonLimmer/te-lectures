@@ -283,6 +283,10 @@ namespace VendingIntegrationTests
                 }
             }
             Assert.IsTrue(foundItem);
+
+            // Test get transaction items by year
+            transactionItems = _db.GetTransactionItemsForYear(DateTime.UtcNow.Year);
+            Assert.IsTrue(transactionItems.Count > 0);
         }
     }
 }

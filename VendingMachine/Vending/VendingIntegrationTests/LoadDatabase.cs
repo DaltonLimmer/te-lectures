@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VendingService.Database;
@@ -12,6 +13,12 @@ namespace VendingIntegrationTests
     {
         [TestMethod]
         public void PopulateDatabase()
+        {
+            //PopulateDatabaseWithInventory();
+            //PopulateDatabaseWithTransactions();
+        }
+
+        private void PopulateDatabaseWithInventory()
         {
             using (TransactionScope scope = new TransactionScope())
             {
@@ -158,6 +165,37 @@ namespace VendingIntegrationTests
                 inventoryItem.Column = 3;
                 inventoryItem.ProductId = productItem.Id;
                 inventoryItem.Id = db.AddInventoryItem(inventoryItem);
+                scope.Complete();
+            }
+        }
+            
+        private void PopulateDatabaseWithTransactions()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                VendingDBService db = new VendingDBService();
+
+                // Get a list of products
+                List<ProductItem> products = db.GetProductItems();
+                
+                VendingTransaction vendTrans = new VendingTransaction()
+                {
+                    Date = DateTime.UtcNow
+                };
+                vendTrans.Id = db.AddVendingTransaction(vendTrans);
+
+                foreach (ProductItem prodItem in products)
+                {
+                    // Add Transaction Item
+                    TransactionItem item = new TransactionItem()
+                    {
+                        SalePrice = prodItem.Price,
+                        VendingTransactionId = vendTrans.Id,
+                        ProductId = prodItem.Id
+                    };
+                    item.Id = db.AddTransactionItem(item);
+                }
+
                 scope.Complete();
             }
         }                
