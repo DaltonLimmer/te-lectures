@@ -189,5 +189,21 @@ namespace VendingService.Helpers
                 scope.Complete();
             }
         }
+
+        public static double PopulateLogFileWithOperations(IVendingService db, ILogService log)
+        {
+            TransactionManager trans = new TransactionManager(db, log);
+
+            trans.AddFeedMoneyOperation(15.0);
+            trans.AddFeedMoneyOperation(10.0);
+
+            var products = db.GetProductItems();
+            foreach (var product in products)
+            {
+                trans.AddPurchaseTransaction(product.Id);
+            }
+
+            return trans.AddGiveChangeOperation();
+        }
     }
 }
