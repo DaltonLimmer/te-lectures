@@ -1,0 +1,186 @@
+﻿
+
+@using VendingService.Helpers
+@using VendingService.Models
+@model InventoryManager
+
+@{ 
+    double InsertedAmount = (double)Session["InsertedAmount"];
+}
+
+<style>
+
+    .machineHeader, .machineFooter, .machineSidebar {
+        background-color: cornflowerblue;
+        border: solid 1px black;
+        color: white;
+        text-align: center;
+        height: 50px;
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+        font-size: 14pt;
+        
+    }
+
+    .machineHeader span {
+        position: relative;
+        bottom: 15px;
+    }
+
+    .machineSidebar {
+        width: 50px;
+    }
+
+
+    .colHeader, .rowHeader {
+        background-color: black;
+        color: white;
+        padding: 3px;
+        text-align: center;
+        min-width: 20px;
+        font-size: 14pt;
+        border: solid 1px black;
+    }
+
+    .colHeader {
+
+    }
+
+    .rowHeader {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .itemCell {
+        border: solid 1px black;
+        width: 125px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .teLogo {
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        display: inline-block;
+    }
+
+    .notAvailable {
+        background-color: lightgray;
+    }
+
+    .changeAmount {
+        font-size: 10pt;
+        color: blue;
+    }
+
+</style>
+
+<h1>Welcome to our Vending Machine!</h1>
+
+<table>
+
+    <tr>
+        <th colspan="@(Model.ColCount + 1)" class="machineHeader">
+            <div class="teLogo"></div>
+            <span>Tech Elevator Vending Machine</span>
+        </th>
+        <th rowspan="@(Model.RowCount + 3)" class="machineSidebar">
+
+            <form method="post" action="@Url.Action("AddMoney","Home")">
+                <input type="submit" name="amount" value="$1.00" />
+                <input type="submit" name="amount" value="$0.25" />
+                <input type="submit" name="amount" value="$0.10" />
+                <input type="submit" name="amount" value="$0.05" />
+                <input type="submit" name="amount" value="$0.01" />
+            </form>
+
+            <br />
+            @InsertedAmount.ToString("C")
+
+            <br />
+            @if (InsertedAmount > 0)
+            {
+            <form method="post" action="@Url.Action("GetChange", "Home")">
+                <input type="submit" value="Done" />
+            </form>
+            }
+
+
+
+        </th>
+    </tr>
+
+    <tr>
+        <th class="colHeader">&nbsp;</th>
+        @for (var j = 1; j <= Model.ColCount; j++)
+        {
+            @* Loop through Columns (1-?)*@
+            <th class="colHeader">@j</th>
+        }
+    </tr>
+
+
+    @* Loop through rows (A-?) *@
+
+    @for (var i = 1; i <= Model.RowCount; i++)
+    {
+    <tr>
+        <th class="rowHeader">@((char)(64 + i))</th>
+        
+        @for (var j = 1; j <= Model.ColCount; j++)
+        {
+            @* Loop through Columns (1-?)*@
+
+        VendingItem vi = Model.GetVendingItem(i, j);
+        string tdClass = "";
+        string disableButton = "";
+
+        if(vi.Product.Price > (double)Session["InsertedAmount"])
+        {
+            tdClass = "notAvailable";
+            disableButton = "disabled";
+        }
+
+        if (vi.Inventory.Qty > 0)
+        {
+            <td class="itemCell @tdClass">
+                
+                @vi.Product.Name (@vi.Inventory.Qty)
+                <form method="post" action="@Url.Action("BuyItem", "Home")">
+
+                    <input type="hidden" name="row" value="@i" />
+                    <input type="hidden" name="col" value="@j" />
+                    <input type="submit" @disableButton
+                           value="Buy (@vi.Product.Price.ToString("C"))" />
+
+                </form>
+        
+            </td>
+            } else
+            {
+                <td class="itemCell notAvailable">Empty</td>
+            }
+        }
+
+    </tr>
+    }
+
+    <tr>
+        <th colspan="@(Model.ColCount + 1)" class="machineFooter">
+            @if(ViewBag.changeAmount != null)
+            {
+                <span>Thank you for your purchase!</span>
+            <br />
+                <span class="changeAmount">
+                You received @ViewBag.changeAmount.ToString("C") as change: @ViewBag.coins </span>
+            }
+        </th>
+    </tr>
+
+
+</table>
+
+
+
+

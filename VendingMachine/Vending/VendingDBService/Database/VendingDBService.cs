@@ -16,8 +16,17 @@ namespace VendingService.Database
 
         private const string _getLastIdSQL = "SELECT CAST(SCOPE_IDENTITY() as int);";
         private string _connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=VendingMachine;Integrated Security=true";
-        
+
         #endregion
+
+        #region Constructors
+        public VendingDBService() { }
+
+        public VendingDBService(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+        #endregion 
 
         #region Vending Methods
 

@@ -13,17 +13,24 @@ namespace VendingService.Mock
     {
         public MockVendingDBService()
         {
-            TestManager.PopulateDatabaseWithInventory(this);
-            TestManager.PopulateDatabaseWithTransactions(this);
+            if (_inventoryItems.Count == 0)
+            {
+                TestManager.PopulateDatabaseWithInventory(this);
+            }
+
+            if (_vendingTransactions.Count == 0)
+            {
+                TestManager.PopulateDatabaseWithTransactions(this);
+            }
         }
 
         #region Variables
 
-        private Dictionary<int, CategoryItem> _categoryItems = new Dictionary<int, CategoryItem>();
-        private Dictionary<int, InventoryItem> _inventoryItems = new Dictionary<int, InventoryItem>();
-        private Dictionary<int, ProductItem> _productItems = new Dictionary<int, ProductItem>();
-        private Dictionary<int, VendingTransaction> _vendingTransactions = new Dictionary<int, VendingTransaction>();
-        private Dictionary<int, TransactionItem> _transactionItems = new Dictionary<int, TransactionItem>();
+        private static Dictionary<int, CategoryItem> _categoryItems = new Dictionary<int, CategoryItem>();
+        private static Dictionary<int, InventoryItem> _inventoryItems = new Dictionary<int, InventoryItem>();
+        private static Dictionary<int, ProductItem> _productItems = new Dictionary<int, ProductItem>();
+        private static Dictionary<int, VendingTransaction> _vendingTransactions = new Dictionary<int, VendingTransaction>();
+        private static Dictionary<int, TransactionItem> _transactionItems = new Dictionary<int, TransactionItem>();
 
         private int _categoryId = 1;
         private int _productId = 1;
