@@ -55,5 +55,6 @@ namespace VendingService.Helpers
             string key = $"{row},{col}";
             return _inventory[key];
         }        
+
     }
 }

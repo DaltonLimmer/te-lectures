@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VendingService.Helpers;
 using VendingService.Interfaces;
 using VendingService.Models;
 
@@ -10,6 +11,12 @@ namespace VendingService.Mock
 {
     public class MockVendingDBService : IVendingService
     {
+        public MockVendingDBService()
+        {
+            TestManager.PopulateDatabaseWithInventory(this);
+            TestManager.PopulateDatabaseWithTransactions(this);
+        }
+
         #region Variables
 
         private Dictionary<int, CategoryItem> _categoryItems = new Dictionary<int, CategoryItem>();
@@ -40,6 +47,7 @@ namespace VendingService.Mock
                     vendingItem.Inventory = item.Clone();
                     vendingItem.Product = _productItems[item.ProductId].Clone();
                     vendingItem.Category = _categoryItems[vendingItem.Product.CategoryId].Clone();
+                    items.Add(vendingItem);
                 }
             }
             catch(Exception ex)

@@ -11,7 +11,12 @@ namespace VendingService.Helpers
 {
     public class ReportManager
     {
-        private IVendingService _db = new VendingDBService();
+        private IVendingService _db;
+
+        public ReportManager(IVendingService db)
+        {
+            _db = db;
+        }
 
         public Report GetReport(int year, List<ProductItem> products)
         {

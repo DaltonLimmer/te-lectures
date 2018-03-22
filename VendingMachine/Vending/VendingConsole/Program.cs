@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using VendingService.Database;
 using VendingService.Helpers;
+using VendingService.Interfaces;
+using VendingService.Mock;
 using VendingService.Models;
 
 namespace VendingConsole
@@ -13,7 +15,9 @@ namespace VendingConsole
     {
         static void Main(string[] args)
         {
-            VendingDBService db = new VendingDBService();
+            //IVendingService db = new VendingDBService();
+            IVendingService db = new MockVendingDBService();
+
             var items = db.GetVendingItems();
 
             InventoryManager inventory = new InventoryManager(items);
@@ -28,7 +32,7 @@ namespace VendingConsole
             Console.WriteLine();
             Console.WriteLine();
 
-            ReportManager reportManager = new ReportManager();
+            ReportManager reportManager = new ReportManager(db);
             Report report = reportManager.GetReport(2018, db.GetProductItems());
             var reportItems = report.ReportItems;
             foreach (var item in reportItems)

@@ -14,8 +14,8 @@ namespace VendingIntegrationTests
     {
         //Used to begin a transaction during initialize and rollback during cleanup
         private TransactionScope tran;  
-        private IVendingService _db = new VendingDBService();
-        //private IVendingService _db = new MockVendingDBService();
+        //private IVendingService _db = new VendingDBService();
+        private IVendingService _db = new MockVendingDBService();
 
         private int _categoryId = BaseItem.InvalidId;
         private int _productId = BaseItem.InvalidId;
