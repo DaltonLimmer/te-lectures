@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@using m3_w2d5_FlashScope_Practice.Controllers
+@using m3_w2d5_FlashScope_Practice.Models
+
+@model IList<ForumPost>
+
+
+<h1>Enter your forum post here.</h1>
+
+@Html.Partial("Message")
+
+<form method="post" action="@Url.Action("ReviewPost", "Home")">
+
+    <textarea name="postContent" rows="10" cols="100"></textarea>
+
+    <input type="submit" />
+
+</form>
+
+@foreach (ForumPost post in Model)
+{
+
+    @Html.Partial("ForumPostPartial", post)
+
+}

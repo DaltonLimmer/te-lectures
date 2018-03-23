@@ -1,0 +1,16 @@
+﻿
+@using m3_w2d5_FlashScope_Practice.Models
+@model ForumPost
+
+<h1>Review Post</h1>
+
+@Html.Partial("ForumPostPartial", Model)
+
+
+<form method="post" action="@Url.Action("AddPost", "Home")">
+    <textarea name="postContent" rows="10" cols="100">@Model.PostText</textarea>
+
+    <input type="submit" value="Add Post"/>
+</form>
+
+@Html.ActionLink("Go to Index Page", "Index");
