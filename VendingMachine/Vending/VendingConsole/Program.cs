@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VendingService.Database;
+using VendingService.File;
 using VendingService.Helpers;
 using VendingService.Interfaces;
 using VendingService.Mock;
@@ -41,8 +42,22 @@ namespace VendingConsole
             }
             Console.WriteLine();
             Console.WriteLine($"**Total Sales** {report.TotalSales.ToString("c")}");
+            
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
 
-            Console.ReadKey();
+            ILogService log = new LogFileService();
+            var changeTotal = TestManager.PopulateLogFileWithOperations(db, log);
+            Console.WriteLine(log.GetLogData());
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            var change = TransactionManager.GetChange(changeTotal);
+            Console.WriteLine($"Change: {change.Dollars} Dollars {change.Quarters} Quarters {change.Dimes} Dimes {change.Nickels} Nickels {change.Pennies} Pennies");
+
+            Console.ReadKey();            
         }
     }
 }

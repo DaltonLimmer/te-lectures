@@ -413,6 +413,23 @@ namespace VendingService.Database
 
         #region VendingTransaction Methods
 
+        public int AddTransactionSet(VendingTransaction vendTrans, List<TransactionItem> transItems)
+        {
+            int vendId = BaseItem.InvalidId;
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                int vendTransId = AddVendingTransaction(vendTrans);
+                foreach (var item in transItems)
+                {
+                    item.VendingTransactionId = vendTransId;
+                    AddTransactionItem(item);
+                }
+            }
+
+            return vendId;
+        }
+
         public int AddVendingTransaction(VendingTransaction item)
         {
             const string sql = "INSERT VendingTransaction (Date) VALUES (@Date);";

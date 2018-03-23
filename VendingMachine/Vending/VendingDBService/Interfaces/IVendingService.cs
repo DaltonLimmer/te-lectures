@@ -29,11 +29,12 @@ namespace VendingService.Interfaces
         //Product
         int AddProductItem(ProductItem item);
         bool UpdateProductItem(ProductItem item);
-        void DeleteProductItem(int inventoryId);
-        ProductItem GetProductItem(int inventoryId);
+        void DeleteProductItem(int productId);
+        ProductItem GetProductItem(int productId);
         List<ProductItem> GetProductItems();
 
         //VendingTransaction
+        int AddTransactionSet(VendingTransaction vendTrans, List<TransactionItem> transItems);
         int AddVendingTransaction(VendingTransaction item);
         VendingTransaction GetVendingTransaction(int id);
         List<VendingTransaction> GetVendingTransactions();

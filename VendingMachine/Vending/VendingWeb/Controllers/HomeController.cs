@@ -13,9 +13,11 @@ namespace VendingWeb.Controllers
     {
 
         private IVendingService _db;
-        public HomeController(IVendingService db)
+        private ITransactionManager _trans;
+        public HomeController(IVendingService db, ITransactionManager trans)
         {
             _db = db;
+            _trans = trans;
         }
 
         // GET: Home
@@ -28,7 +30,7 @@ namespace VendingWeb.Controllers
 
             if (changeAmount.HasValue)
             {
-                ViewBag.changeAmount = changeAmount;
+                ViewBag.changeAmount = changeAmount;                
                 ViewBag.coins = getCoinsForChange(changeAmount.Value);
             }
 
@@ -83,40 +85,8 @@ namespace VendingWeb.Controllers
 
         private string getCoinsForChange(double changeAmount)
         {
-            int dollars = 0;
-            int quarters = 0;
-            int dimes = 0;
-            int nickles = 0;
-            int pennies = 0;
-
-            int remainingAmount = (int)(changeAmount * 100.0);
-
-            while(remainingAmount > 0)
-            {
-                if(remainingAmount >= 100)
-                {
-                    dollars++;
-                    remainingAmount -= 100;
-                } else if(remainingAmount >= 25)
-                {
-                    quarters++;
-                    remainingAmount -= 25;
-                } else if(remainingAmount >= 10)
-                {
-                    dimes++;
-                    remainingAmount -= 10;
-                } else if(remainingAmount >= 5)
-                {
-                    nickles++;
-                    remainingAmount -= 5;
-                } else if(remainingAmount >= 1)
-                {
-                    pennies++;
-                    remainingAmount -= 1;
-                }                
-            }
-
-            return $"{dollars}b/{quarters}q/{dimes}d/{nickles}n/{pennies}p";
+            Change change = TransactionManager.GetChange(changeAmount);
+            return $"{change.Dollars}b/{change.Quarters}q/{change.Dimes}d/{change.Nickels}n/{change.Pennies}p";
         }
 
 

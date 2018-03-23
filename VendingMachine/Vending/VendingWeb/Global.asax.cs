@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using VendingService.Database;
+using VendingService.File;
+using VendingService.Helpers;
 using VendingService.Interfaces;
 using VendingService.Mock;
 
@@ -29,10 +31,24 @@ namespace VendingWeb
         {
             var kernel = new StandardKernel();
 
-            //string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
-
             // Map Interfaces to Classes
-            kernel.Bind<IVendingService>().To<MockVendingDBService>();
+
+            // Bind Database
+            //kernel.Bind<IVendingService>().To<MockVendingDBService>();
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            kernel.Bind<IVendingService>().To<VendingDBService>().WithConstructorArgument("connectionString", connectionString);
+
+            // Bind Log Service
+            kernel.Bind<ILogService>().To<LogFileService>();
+
+            // Bind Transaction Manager
+            var db = kernel.Get<IVendingService>();
+            var log = kernel.Get<ILogService>();
+            //IVendingService db, ILogService log
+            kernel.Bind<ITransactionManager>().To<TransactionManager>().
+                WithConstructorArgument("db", db).
+                WithConstructorArgument("log", log);
+
 
             return kernel;
         }

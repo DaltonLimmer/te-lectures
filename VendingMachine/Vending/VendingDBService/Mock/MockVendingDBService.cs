@@ -256,6 +256,18 @@ namespace VendingService.Mock
 
         #region VendingTransaction
 
+        public int AddTransactionSet(VendingTransaction vendTrans, List<TransactionItem> transItems)
+        {
+            int vendTransId = AddVendingTransaction(vendTrans.Clone());
+            foreach(var item in transItems)
+            {
+                TransactionItem newItem = item.Clone();
+                newItem.VendingTransactionId = vendTransId;
+                AddTransactionItem(newItem);
+            }
+            return vendTransId;
+        }
+
         public int AddVendingTransaction(VendingTransaction item)
         {
             item.Id = _vendingTransactionId++;
