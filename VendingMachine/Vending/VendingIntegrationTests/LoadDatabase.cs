@@ -10,7 +10,7 @@ using VendingService.Models;
 
 namespace VendingIntegrationTests
 {
-    [TestClass]
+    //[TestClass]
     public class LoadDatabase
     {
         [TestMethod]
