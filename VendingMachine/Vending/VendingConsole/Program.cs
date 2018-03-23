@@ -55,7 +55,7 @@ namespace VendingConsole
             Console.WriteLine();
 
             var change = TransactionManager.GetChange(changeTotal);
-            Console.WriteLine($"Change: {change.Quarters} Quarters {change.Dimes} Dimes {change.Nickels} Nickels");
+            Console.WriteLine($"Change: {change.Dollars} Dollars {change.Quarters} Quarters {change.Dimes} Dimes {change.Nickels} Nickels {change.Pennies} Pennies");
 
             Console.ReadKey();            
         }

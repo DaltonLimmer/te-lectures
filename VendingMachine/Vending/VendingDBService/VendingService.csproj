@@ -48,6 +48,7 @@
     <Compile Include="Helpers\ReportManager.cs" />
     <Compile Include="Helpers\TestManager.cs" />
     <Compile Include="Interfaces\ILogService.cs" />
+    <Compile Include="Interfaces\ITransactionManager.cs" />
     <Compile Include="Mock\MockLogFileService.cs" />
     <Compile Include="Models\BaseItem.cs" />
     <Compile Include="Models\CategoryItem.cs" />

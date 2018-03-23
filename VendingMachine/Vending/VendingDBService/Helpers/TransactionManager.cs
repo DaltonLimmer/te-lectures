@@ -8,7 +8,7 @@ using VendingService.Models;
 
 namespace VendingService.Helpers
 {
-    public class TransactionManager
+    public class TransactionManager : ITransactionManager
     {
         private IVendingService _db = null;
         private ILogService _log = null;
@@ -88,14 +88,17 @@ namespace VendingService.Helpers
         {
             Change result = new Change();
 
-            int temp = (int) (changeTotal * 100.0);
+            int temp = (int)(changeTotal * 100.0);
+            result.Dollars = temp / 100;
+            temp -= result.Dollars * 100;
+
             result.Quarters = temp / 25;
             temp -= result.Quarters * 25;
 
             result.Dimes = temp / 10;
             temp -= result.Dimes * 10;
 
-            result.Nickels = temp / 5;
+            result.Pennies = temp;
 
             return result;
         }
