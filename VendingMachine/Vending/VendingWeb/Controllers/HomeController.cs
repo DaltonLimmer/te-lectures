@@ -9,7 +9,7 @@ using VendingService.Models;
 
 namespace VendingWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
 
         private IVendingService _db;
@@ -40,9 +40,13 @@ namespace VendingWeb.Controllers
         public ActionResult AddMoney(string amount, int[] hiddenSample)
         {
 
+
             double dAmount = Convert.ToDouble(amount.Replace("$", ""));
 
             Session["InsertedAmount"] = (double)Session["InsertedAmount"] + dAmount;
+
+            SetFlashMessage($"{dAmount.ToString("C")} inserted.");
+
 
             return RedirectToAction("Index");
         }
@@ -60,6 +64,9 @@ namespace VendingWeb.Controllers
                 Session["InsertedAmount"] = (double)Session["InsertedAmount"] - vi.Product.Price;
                 inv.Qty--;
                 _db.UpdateInventoryItem(inv);
+
+                SetFlashMessage($"Purchased {vi.Product.Name}.", FlashMessageType.Warning);
+
             }
 
             return RedirectToAction("Index");
@@ -118,5 +125,7 @@ namespace VendingWeb.Controllers
             var vendingItems = _db.GetVendingItems();
             return new InventoryManager(vendingItems);
         }
+
+
     }
 }
