@@ -1,0 +1,26 @@
+﻿
+@using m3_w2d5_FlashScope_Practice.Controllers
+
+@{ 
+    string cssClass = "";
+    if (TempData[BaseController.SUCCESS_MESSAGE_TYPE_KEY] != null)
+    {
+        MessageType type = (MessageType)TempData[BaseController.SUCCESS_MESSAGE_TYPE_KEY];
+
+        if (type == MessageType.Error)
+        {
+            cssClass = "danger";
+        }
+        else
+        {
+            cssClass = type.ToString().ToLower();
+        }
+    }
+}
+
+
+<h3 class="label label-@cssClass">@TempData[HomeController.SUCCESS_MESSAGE_KEY]</h3>
+<br />&nbsp;
+
+
+
