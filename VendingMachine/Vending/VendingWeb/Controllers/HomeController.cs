@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using VendingService.Helpers;
 using VendingService.Interfaces;
 using VendingService.Models;
+using VendingWeb.Models;
 
 namespace VendingWeb.Controllers
 {
@@ -22,19 +23,18 @@ namespace VendingWeb.Controllers
         }
 
         // GET: Home
-        public ActionResult Index(double? changeAmount)
+        public ActionResult Index()
         {
             var vendingItems = _db.GetVendingItems();
             InventoryManager im = GetInventoryManager();
 
-            if (changeAmount.HasValue)
-            {
-                var trans = GetTransactionManager();
-                ViewBag.changeAmount = trans.RunningTotal;                
-                ViewBag.coins = GetCoinsForChange(trans);
-            }
+            var trans = GetTransactionManager();
+            ViewBag.changeAmount = trans.RunningTotal;                
+            ViewBag.coins = GetCoinsForChange(trans);
 
-            return View(im);
+            HelperViewModel model = GetHelperViewModel(trans, im);
+
+            return View(model);
         }
 
 
@@ -96,6 +96,16 @@ namespace VendingWeb.Controllers
             }
 
             return trans;
+        }
+
+        private HelperViewModel GetHelperViewModel(TransactionManager trans, InventoryManager inv = null, ReportManager report = null)
+        {
+            HelperViewModel helper = new HelperViewModel();
+            helper.Inv = inv;
+            helper.Trans = trans;
+            helper.Report = report;
+
+            return helper;
         }
 
         private string GetCoinsForChange(TransactionManager trans)
