@@ -14,7 +14,8 @@ namespace VendingWeb.Controllers
 
         private IVendingService _db;
         private ITransactionManager _trans;
-        public HomeController(IVendingService db, ITransactionManager trans)
+
+        public HomeController(IVendingService db, ITransactionManager trans, ILogService log)
         {
             _db = db;
             _trans = trans;

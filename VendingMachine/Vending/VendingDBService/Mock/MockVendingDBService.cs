@@ -332,16 +332,11 @@ namespace VendingService.Mock
         {
             List<TransactionItem> items = new List<TransactionItem>();
 
-
             foreach (var item in _transactionItems.Values.ToList())
             {
                 if (item.VendingTransactionId == vendingTransactionId)
                 {
                     items.Add(item.Clone());
-                }
-                else
-                {
-                    throw new Exception("Item does not exist.");
                 }
             }
 

@@ -20,7 +20,9 @@ namespace VendingService.Database
         #endregion
 
         #region Constructors
-        public VendingDBService() { }
+        public VendingDBService()
+        {
+        }
 
         public VendingDBService(string connectionString)
         {
