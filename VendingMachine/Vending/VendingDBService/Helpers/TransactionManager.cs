@@ -10,6 +10,16 @@ namespace VendingService.Helpers
 {
     public class TransactionManager
     {
+        public enum eTransactionState
+        {
+            Unknown = 0,
+            FeedMoney = 1,
+            Purchase = 2,
+            Change = 3
+        }
+
+        private Change _change = new Change();
+        private eTransactionState _state = eTransactionState.Unknown;
         private IVendingService _db = null;
         private ILogService _log = null;
         private List<TransactionItem> _transactionItems = new List<TransactionItem>();
@@ -23,6 +33,22 @@ namespace VendingService.Helpers
             }
         }
 
+        public Change LastChange
+        {
+            get
+            {
+                return _change;
+            }
+        }
+
+        public eTransactionState LastState
+        {
+            get
+            {
+                return _state;
+            }
+        }
+
         public TransactionManager(IVendingService db, ILogService log)
         {
             _db = db;
@@ -31,6 +57,8 @@ namespace VendingService.Helpers
 
         public double AddPurchaseTransaction(int productId)
         {
+            _state = eTransactionState.Purchase;
+
             ProductItem product = _db.GetProductItem(productId);
 
             TransactionItem transactionItem = new TransactionItem();
@@ -52,6 +80,8 @@ namespace VendingService.Helpers
 
         public double AddFeedMoneyOperation(double amountAdded)
         {
+            _state = eTransactionState.FeedMoney;
+
             VendingOperation operation = new VendingOperation();
             operation.OperationType = VendingOperation.eOperationType.FeedMoney;
             operation.Price = amountAdded;
@@ -65,15 +95,19 @@ namespace VendingService.Helpers
 
         public Change AddGiveChangeOperation()
         {
+            _state = eTransactionState.Change;
+
             double result = _runningTotal;
             VendingOperation operation = new VendingOperation();
             operation.OperationType = VendingOperation.eOperationType.GiveChange;
             operation.RunningTotal = _runningTotal;
             _log.LogOperation(operation);
 
+            _change = GetChange();
+
             _runningTotal = 0.0;
 
-            return GetChange();
+            return _change;
         }
 
         public void CommitTransaction()

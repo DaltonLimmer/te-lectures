@@ -163,12 +163,17 @@
 
     <tr>
         <th colspan="@(Model.Inv.ColCount + 1)" class="machineFooter">
-            @if(ViewBag.changeAmount != null)
+            @if (Model.Trans.LastState == TransactionManager.eTransactionState.Change)
             {
                 <span>Thank you for your purchase!</span>
             <br />
-                <span class="changeAmount">
-                You received @ViewBag.changeAmount.ToString("C") as change: @ViewBag.coins </span>
+            <span class="changeAmount">
+                @{
+                    Change change = @Model.Trans.LastChange;
+                    string changeStr = $"{change.Dollars}b/{change.Quarters}q/{change.Dimes}d/{change.Nickels}n/{change.Pennies}p";
+                }
+                    Change: @changeStr
+            </span>
             }
         </th>
     </tr>
