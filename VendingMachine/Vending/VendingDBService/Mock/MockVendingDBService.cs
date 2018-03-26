@@ -32,11 +32,11 @@ namespace VendingService.Mock
         private static Dictionary<int, VendingTransaction> _vendingTransactions = new Dictionary<int, VendingTransaction>();
         private static Dictionary<int, TransactionItem> _transactionItems = new Dictionary<int, TransactionItem>();
 
-        private int _categoryId = 1;
-        private int _productId = 1;
-        private int _inventoryId = 1;
-        private int _vendingTransactionId = 1;
-        private int _transactionItemId = 1;
+        private static int _categoryId = 1;
+        private static int _productId = 1;
+        private static int _inventoryId = 1;
+        private static int _vendingTransactionId = 1;
+        private static int _transactionItemId = 1;
 
         #endregion
 

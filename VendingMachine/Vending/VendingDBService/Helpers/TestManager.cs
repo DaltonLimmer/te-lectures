@@ -190,7 +190,7 @@ namespace VendingService.Helpers
             }
         }
 
-        public static double PopulateLogFileWithOperations(IVendingService db, ILogService log)
+        public static Change PopulateLogFileWithOperations(IVendingService db, ILogService log)
         {
             TransactionManager trans = new TransactionManager(db, log);
 

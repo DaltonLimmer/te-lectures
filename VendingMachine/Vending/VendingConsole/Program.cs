@@ -48,13 +48,13 @@ namespace VendingConsole
             Console.WriteLine();
 
             ILogService log = new LogFileService();
-            var changeTotal = TestManager.PopulateLogFileWithOperations(db, log);
+            Change change = TestManager.PopulateLogFileWithOperations(db, log);
             Console.WriteLine(log.GetLogData());
 
             Console.WriteLine();
             Console.WriteLine();
 
-            var change = TransactionManager.GetChange(changeTotal);
+            TransactionManager trans = new TransactionManager(db, log);
             Console.WriteLine($"Change: {change.Dollars} Dollars {change.Quarters} Quarters {change.Dimes} Dimes {change.Nickels} Nickels {change.Pennies} Pennies");
 
             Console.ReadKey();            

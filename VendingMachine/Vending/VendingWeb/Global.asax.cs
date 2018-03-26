@@ -43,12 +43,12 @@ namespace VendingWeb
             kernel.Bind<ILogService>().To<LogFileService>();
 
             // Bind Transaction Manager
-            var db = kernel.Get<IVendingService>();
-            var log = kernel.Get<ILogService>();
-            //IVendingService db, ILogService log
-            kernel.Bind<ITransactionManager>().To<TransactionManager>().
-                WithConstructorArgument("db", db).
-                WithConstructorArgument("log", log);
+            //var db = kernel.Get<IVendingService>();
+            //var log = kernel.Get<ILogService>();
+            ////IVendingService db, ILogService log
+            //kernel.Bind<ITransactionManager>().To<TransactionManager>().
+            //    WithConstructorArgument("db", db).
+            //    WithConstructorArgument("log", log);
 
 
             return kernel;

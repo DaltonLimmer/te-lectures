@@ -5,7 +5,12 @@
 @model InventoryManager
 
 @{ 
-    double InsertedAmount = (double)Session["InsertedAmount"];
+    TransactionManager trans = Session["InsertedAmount"] as TransactionManager;
+    double InsertedAmount = 0.0;
+    if (trans != null)
+    {
+        InsertedAmount = trans.RunningTotal;
+    }
 }
 
 <style>
@@ -138,7 +143,7 @@
         string tdClass = "";
         string disableButton = "";
 
-        if(vi.Product.Price > (double)Session["InsertedAmount"])
+        if(vi.Product.Price > InsertedAmount)
         {
             tdClass = "notAvailable";
             disableButton = "disabled";

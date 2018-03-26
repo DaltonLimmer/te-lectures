@@ -13,26 +13,25 @@ namespace VendingWeb.Controllers
     {
 
         private IVendingService _db;
-        private ITransactionManager _trans;
+        private ILogService _log;
 
-        public HomeController(IVendingService db, ITransactionManager trans, ILogService log)
+        public HomeController(IVendingService db, ILogService log)
         {
             _db = db;
-            _trans = trans;
+            _log = log;
         }
 
         // GET: Home
         public ActionResult Index(double? changeAmount)
         {
-            if (Session["InsertedAmount"] == null) Session["InsertedAmount"] = 0.0;
-
             var vendingItems = _db.GetVendingItems();
             InventoryManager im = GetInventoryManager();
 
             if (changeAmount.HasValue)
             {
-                ViewBag.changeAmount = changeAmount;                
-                ViewBag.coins = getCoinsForChange(changeAmount.Value);
+                var trans = GetTransactionManager();
+                ViewBag.changeAmount = trans.RunningTotal;                
+                ViewBag.coins = GetCoinsForChange(trans);
             }
 
             return View(im);
@@ -42,14 +41,12 @@ namespace VendingWeb.Controllers
         [HttpPost]
         public ActionResult AddMoney(string amount, int[] hiddenSample)
         {
-
-
             double dAmount = Convert.ToDouble(amount.Replace("$", ""));
 
-            Session["InsertedAmount"] = (double)Session["InsertedAmount"] + dAmount;
+            var trans = GetTransactionManager();
+            trans.AddFeedMoneyOperation(dAmount);
 
             SetFlashMessage($"{dAmount.ToString("C")} inserted.");
-
 
             return RedirectToAction("Index");
         }
@@ -64,12 +61,13 @@ namespace VendingWeb.Controllers
 
             if (vi.Product.Price < (double)Session["InsertedAmount"] && vi.Inventory.Qty > 0)
             {
-                Session["InsertedAmount"] = (double)Session["InsertedAmount"] - vi.Product.Price;
+                var trans = GetTransactionManager();
+                trans.AddPurchaseTransaction(vi.Product.Id);
+
                 inv.Qty--;
                 _db.UpdateInventoryItem(inv);
 
                 SetFlashMessage($"Purchased {vi.Product.Name}.", FlashMessageType.Warning);
-
             }
 
             return RedirectToAction("Index");
@@ -78,15 +76,31 @@ namespace VendingWeb.Controllers
         [HttpPost]
         public ActionResult GetChange()
         {
-            double changeAmt = (double)Session["InsertedAmount"];
-            Session["InsertedAmount"] = 0.0;
+            var trans = GetTransactionManager();
+            double changeAmt = trans.RunningTotal;
             return RedirectToAction("Index", new { changeAmount = changeAmt } );
         }
 
-
-        private string getCoinsForChange(double changeAmount)
+        private TransactionManager GetTransactionManager()
         {
-            Change change = TransactionManager.GetChange(changeAmount);
+            TransactionManager trans = null;
+
+            if (Session["TransactionManager"] == null)
+            {
+                trans = new TransactionManager(_db, _log);
+                Session["TransactionManager"] = trans;
+            }
+            else
+            {
+                trans = Session["TransactionManager"] as TransactionManager;
+            }
+
+            return trans;
+        }
+
+        private string GetCoinsForChange(TransactionManager trans)
+        {
+            Change change = trans.AddGiveChangeOperation();
             return $"{change.Dollars}b/{change.Quarters}q/{change.Dimes}d/{change.Nickels}n/{change.Pennies}p";
         }
 

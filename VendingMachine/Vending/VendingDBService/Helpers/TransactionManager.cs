@@ -8,7 +8,7 @@ using VendingService.Models;
 
 namespace VendingService.Helpers
 {
-    public class TransactionManager : ITransactionManager
+    public class TransactionManager
     {
         private IVendingService _db = null;
         private ILogService _log = null;
@@ -63,7 +63,7 @@ namespace VendingService.Helpers
             return _runningTotal;
         }
 
-        public double AddGiveChangeOperation()
+        public Change AddGiveChangeOperation()
         {
             double result = _runningTotal;
             VendingOperation operation = new VendingOperation();
@@ -73,7 +73,7 @@ namespace VendingService.Helpers
 
             _runningTotal = 0.0;
 
-            return result;
+            return GetChange();
         }
 
         public void CommitTransaction()
@@ -84,11 +84,11 @@ namespace VendingService.Helpers
             _db.AddTransactionSet(vendTrans, _transactionItems);
         }
 
-        public static Change GetChange(double changeTotal)
+        private Change GetChange()
         {
             Change result = new Change();
 
-            int temp = (int)(changeTotal * 100.0);
+            int temp = (int)(_runningTotal * 100.0);
             result.Dollars = temp / 100;
             temp -= result.Dollars * 100;
 

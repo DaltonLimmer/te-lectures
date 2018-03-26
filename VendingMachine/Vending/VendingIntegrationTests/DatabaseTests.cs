@@ -31,27 +31,35 @@ namespace VendingIntegrationTests
             // Initialize a new transaction scope. This automatically begins the transaction.
             tran = new TransactionScope();
 
-            // Add category item
-            _categoryId = _db.AddCategoryItem(
-                new CategoryItem()
-                {
-                    Name = "TestCategory",
-                    Noise = "CategoryNoise"
-                });
-            Assert.AreNotEqual(0, _categoryId);
+            if (_categoryId == BaseItem.InvalidId)
+            {
+                // Add category item
+                _categoryId = _db.AddCategoryItem(
+                    new CategoryItem()
+                    {
+                        Name = "TestCategory",
+                        Noise = "CategoryNoise"
+                    });
+                Assert.AreNotEqual(0, _categoryId);
+            }
 
-            // Add product item
-            _productId = _db.AddProductItem(
+            if (_productId == BaseItem.InvalidId)
+            {
+                // Add product item
+                _productId = _db.AddProductItem(
                 new ProductItem()
                 {
                     Name = "TestProduct",
                     Price = 0.50,
                     CategoryId = _categoryId
                 });
-            Assert.AreNotEqual(0, _productId);
+                Assert.AreNotEqual(0, _productId);
+            }
 
-            // Add inventory item
-            _inventoryId = _db.AddInventoryItem(
+            if (_inventoryId == BaseItem.InvalidId)
+            {
+                // Add inventory item
+                _inventoryId = _db.AddInventoryItem(
                 new InventoryItem()
                 {
                     Row = 1,
@@ -59,15 +67,19 @@ namespace VendingIntegrationTests
                     Qty = 4,
                     ProductId = _productId
                 });
-            Assert.AreNotEqual(0, _inventoryId);
+                    Assert.AreNotEqual(0, _inventoryId);
+            }
 
-            // Add vending transaction
-            _vendingTransactionId = _db.AddVendingTransaction(
+            if (_vendingTransactionId == BaseItem.InvalidId)
+            {
+                // Add vending transaction
+                _vendingTransactionId = _db.AddVendingTransaction(
                 new VendingTransaction()
                 {
                     Date = DateTime.UtcNow
                 });
-            Assert.AreNotEqual(0, _vendingTransactionId);
+                Assert.AreNotEqual(0, _vendingTransactionId);
+            }
         }
 
         /// <summary>
