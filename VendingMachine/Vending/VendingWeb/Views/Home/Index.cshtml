@@ -1,17 +1,7 @@
-﻿
-
-@using VendingService.Helpers
+﻿@using VendingService.Helpers
+@using VendingWeb.Models
 @using VendingService.Models
-@model InventoryManager
-
-@{ 
-    TransactionManager trans = Session["InsertedAmount"] as TransactionManager;
-    double InsertedAmount = 0.0;
-    if (trans != null)
-    {
-        InsertedAmount = trans.RunningTotal;
-    }
-}
+@model HelperViewModel
 
 <style>
 
@@ -88,11 +78,11 @@
 <table>
 
     <tr>
-        <th colspan="@(Model.ColCount + 1)" class="machineHeader">
+        <th colspan="@(Model.Inv.ColCount + 1)" class="machineHeader">
             <div class="teLogo"></div>
             <span>Tech Elevator Vending Machine</span>
         </th>
-        <th rowspan="@(Model.RowCount + 3)" class="machineSidebar">
+        <th rowspan="@(Model.Inv.RowCount + 3)" class="machineSidebar">
 
             <form method="post" action="@Url.Action("AddMoney","Home")">
                 <input type="submit" name="amount" value="$1.00" />
@@ -103,24 +93,22 @@
             </form>
 
             <br />
-            @InsertedAmount.ToString("C")
+            @Model.Trans.RunningTotal.ToString("C")
 
             <br />
-            @if (InsertedAmount > 0)
+            @if (Model.Trans.RunningTotal > 0.0)
             {
             <form method="post" action="@Url.Action("GetChange", "Home")">
                 <input type="submit" value="Done" />
             </form>
             }
 
-
-
         </th>
     </tr>
 
     <tr>
         <th class="colHeader">&nbsp;</th>
-        @for (var j = 1; j <= Model.ColCount; j++)
+        @for (var j = 1; j <= Model.Inv.ColCount; j++)
         {
             @* Loop through Columns (1-?)*@
             <th class="colHeader">@j</th>
@@ -130,20 +118,20 @@
 
     @* Loop through rows (A-?) *@
 
-    @for (var i = 1; i <= Model.RowCount; i++)
+    @for (var i = 1; i <= Model.Inv.RowCount; i++)
     {
     <tr>
         <th class="rowHeader">@((char)(64 + i))</th>
         
-        @for (var j = 1; j <= Model.ColCount; j++)
+        @for (var j = 1; j <= Model.Inv.ColCount; j++)
         {
             @* Loop through Columns (1-?)*@
 
-        VendingItem vi = Model.GetVendingItem(i, j);
+        VendingItem vi = Model.Inv.GetVendingItem(i, j);
         string tdClass = "";
         string disableButton = "";
 
-        if(vi.Product.Price > InsertedAmount)
+        if(vi.Product.Price > Model.Trans.RunningTotal)
         {
             tdClass = "notAvailable";
             disableButton = "disabled";
@@ -174,13 +162,18 @@
     }
 
     <tr>
-        <th colspan="@(Model.ColCount + 1)" class="machineFooter">
-            @if(ViewBag.changeAmount != null)
+        <th colspan="@(Model.Inv.ColCount + 1)" class="machineFooter">
+            @if (Model.Trans.LastState == TransactionManager.eTransactionState.Change)
             {
                 <span>Thank you for your purchase!</span>
             <br />
-                <span class="changeAmount">
-                You received @ViewBag.changeAmount.ToString("C") as change: @ViewBag.coins </span>
+            <span class="changeAmount">
+                @{
+                    Change change = @Model.Trans.LastChange;
+                    string changeStr = $"{change.Dollars}b/{change.Quarters}q/{change.Dimes}d/{change.Nickels}n/{change.Pennies}p";
+                }
+                    Change: @changeStr
+            </span>
             }
         </th>
     </tr>

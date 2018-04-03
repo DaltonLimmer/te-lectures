@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using VendingService.Helpers;
 using VendingService.Interfaces;
 using VendingService.Models;
+using VendingWeb.Models;
 
 namespace VendingWeb.Controllers
 {
@@ -19,22 +20,22 @@ namespace VendingWeb.Controllers
         {
             _db = db;
             _log = log;
+
+            //ReportManager reportMgr = new ReportManager(db);
+            //Report report = reportMgr.GetReport(2018, _db.GetProductItems());
+            //var items = report.ReportItems;
         }
 
         // GET: Home
-        public ActionResult Index(double? changeAmount)
+        public ActionResult Index()
         {
             var vendingItems = _db.GetVendingItems();
             InventoryManager im = GetInventoryManager();
 
-            if (changeAmount.HasValue)
-            {
-                var trans = GetTransactionManager();
-                ViewBag.changeAmount = trans.RunningTotal;                
-                ViewBag.coins = GetCoinsForChange(trans);
-            }
+            var trans = GetTransactionManager();
+            HelperViewModel model = GetHelperViewModel(trans, im);
 
-            return View(im);
+            return View(model);
         }
 
 
@@ -55,13 +56,13 @@ namespace VendingWeb.Controllers
         public ActionResult BuyItem(int row, int col)
         {
             InventoryManager im = GetInventoryManager();
+            var trans = GetTransactionManager();
 
             var vi = im.GetVendingItem(row, col);
             var inv = vi.Inventory;
 
-            if (vi.Product.Price < (double)Session["InsertedAmount"] && vi.Inventory.Qty > 0)
+            if (vi.Product.Price < trans.RunningTotal && vi.Inventory.Qty > 0)
             {
-                var trans = GetTransactionManager();
                 trans.AddPurchaseTransaction(vi.Product.Id);
 
                 inv.Qty--;
@@ -77,8 +78,9 @@ namespace VendingWeb.Controllers
         public ActionResult GetChange()
         {
             var trans = GetTransactionManager();
-            double changeAmt = trans.RunningTotal;
-            return RedirectToAction("Index", new { changeAmount = changeAmt } );
+            trans.AddGiveChangeOperation();            
+            
+            return RedirectToAction("Index");
         }
 
         private TransactionManager GetTransactionManager()
@@ -98,12 +100,15 @@ namespace VendingWeb.Controllers
             return trans;
         }
 
-        private string GetCoinsForChange(TransactionManager trans)
+        private HelperViewModel GetHelperViewModel(TransactionManager trans, InventoryManager inv = null, ReportManager report = null)
         {
-            Change change = trans.AddGiveChangeOperation();
-            return $"{change.Dollars}b/{change.Quarters}q/{change.Dimes}d/{change.Nickels}n/{change.Pennies}p";
-        }
+            HelperViewModel helper = new HelperViewModel();
+            helper.Inv = inv;
+            helper.Trans = trans;
+            helper.Report = report;
 
+            return helper;
+        }
 
         private InventoryManager GetInventoryManager()
         {
