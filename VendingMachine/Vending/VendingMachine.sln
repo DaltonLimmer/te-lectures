@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingConsole", "VendingCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingWeb", "VendingWeb\VendingWeb.csproj", "{2B80A45F-6D0C-4158-8D82-AB35E4B9FA9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingWebServices", "VendingWebServices\VendingWebServices.csproj", "{FFC6250C-094D-4B62-81AF-E42C53FB080C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2B80A45F-6D0C-4158-8D82-AB35E4B9FA9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B80A45F-6D0C-4158-8D82-AB35E4B9FA9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B80A45F-6D0C-4158-8D82-AB35E4B9FA9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFC6250C-094D-4B62-81AF-E42C53FB080C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC6250C-094D-4B62-81AF-E42C53FB080C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC6250C-094D-4B62-81AF-E42C53FB080C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC6250C-094D-4B62-81AF-E42C53FB080C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
