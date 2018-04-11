@@ -15,11 +15,6 @@ namespace VendingWebServices.Controllers
 
         IVendingService dal;
 
-        public VendingController()
-        {
-            dal = new MockVendingDBService();
-        }
-
         public VendingController(IVendingService dal)
         {
             this.dal = dal;
