@@ -25,7 +25,7 @@ namespace VendingWeb.Controllers
             //Report report = reportMgr.GetReport(2018, _db.GetProductItems());
             //var items = report.ReportItems;
         }
-
+        
         // GET: Home
         public ActionResult Index()
         {
