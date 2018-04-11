@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js" integrity="sha384-lZmvU/TzxoIQIOD9yQDEpvxp6wEU32Fy0ckUgOH4EIlMOCdR823rg4+3gWRwnX1M" crossorigin="anonymous"></script> -->
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">Amiibo Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="character" class="col-sm-2 col-form-label">Amiibo Character</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="character" value="Zelda">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Amiibo Type</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="type">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="series" class="col-sm-2 col-form-label">Amiibo Series</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="series">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <button id="searchBtn" class="btn btn-primary btn-block">Search</button>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table table-striped" id="resultsTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Character Name</th>
+                <th>Amiibo Series</th>
+            </tr>
+        </thead>
+        <tbody id="results">
+
+        </tbody>
+    </table>
+
+
+
+
+</body>
+
+
+</html>
