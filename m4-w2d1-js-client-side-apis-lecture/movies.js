@@ -60,7 +60,7 @@ function MovieService() {
     this.search = function(movieTitle, successCallback) {
         $.ajax({
             url: url + "s=" + movieTitle,
-            type: "GET",
+            method: "GET",
             dataType: "json"
         }).done(function(data) {
             successCallback(data);
