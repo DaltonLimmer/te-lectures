@@ -1,0 +1,20 @@
+﻿
+@using m5_LoginSample.Models
+@using m5_LoginSample.Controllers
+@model User
+
+<h1>This is the Login Page</h1>
+
+<p style="color: red;">@TempData[BaseController.ErrorMessageKey]</p>
+
+<form method="post" action="/Home/DoLogin">
+
+    Username: @Html.TextBoxFor(m => m.Username)
+    <br />
+    Password: @Html.PasswordFor(m => m.Password)
+    <br />
+    <button>Log In</button>
+
+
+</form>
+

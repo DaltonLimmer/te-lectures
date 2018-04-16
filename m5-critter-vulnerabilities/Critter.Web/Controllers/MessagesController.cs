@@ -40,7 +40,7 @@ namespace Critter.Web.Controllers
 
 
         [Route("users/{username}/messages")]
-        [CritterAuthorization("user", "admin")]
+        [CritterAuthorization]
         public ActionResult SentMessages(string username)
         {
             var messages = messageDal.GetAllSentMessageForUser(username);
@@ -80,14 +80,15 @@ namespace Critter.Web.Controllers
 
         [HttpGet]
         [Route("users/{username}/messages/{messageId}/delete")]
+        [CritterAuthorization]
         public ActionResult DeleteMessage(int messageId, string username)
         {
-            if (Session[UsernameKey] as string != username)
+            var message = messageDal.GetMessage(messageId);
+
+            if(message.Sender != username)
             {
                 return new HttpStatusCodeResult(403);
             }
-
-            var message = messageDal.GetMessage(messageId);
 
             if (message == null)
             {
@@ -100,14 +101,15 @@ namespace Critter.Web.Controllers
 
         [HttpPost]
         [Route("users/{username}/messages/{messageId}/delete")]
+        [CritterAuthorization]
         public ActionResult DeleteMessage(string username, Message model)
         {
-            if (Session[UsernameKey] as string != username)
+            var message = messageDal.GetMessage(model.MessageId);
+
+            if (message.Sender != username)
             {
                 return new HttpStatusCodeResult(403);
             }
-
-            var message = messageDal.GetMessage(model.MessageId);
 
             if (message == null)
             {
