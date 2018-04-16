@@ -12,7 +12,7 @@ namespace Critter.Web.Controllers
 {
     public class CritterController : Controller
     {
-        private const string UsernameKey = "Critter_UserName";
+        public const string UsernameKey = "Critter_UserName";
         private readonly IUserDAL userDal;
 
         public CritterController(IUserDAL userDal)
@@ -64,6 +64,7 @@ namespace Critter.Web.Controllers
         /// </summary>
         public void LogUserOut()
         {
+            Session.Clear();
             Session.Abandon();
             //Response.Cookies.Add(new HttpCookie("ASP.NET_SessionId", ""));
         }
@@ -82,6 +83,18 @@ namespace Critter.Web.Controllers
             return View("_AuthenticationBar", model);
         }
 
+        protected bool IsUserAuthorized(string username)
+        {
+
+            if (Session[UsernameKey] as string != username)
+            {
+                return false;
+            }
+            return true;
+
+
+
+        }
 
     }
 }

@@ -10,6 +10,8 @@ namespace Critter.Web.Models
     {
         [Required(ErrorMessage = "This field is required")]
         [Display(Name = "New Password:")]
+        [MinLength(8, ErrorMessage = "Password must be 8 characters or more")]
+        [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]))(?=.*[\da-zA-Z!@#$%^&*()]).{8,128}$", ErrorMessage = "Password must meet the requirements")]
         public string NewPassword { get; set; }
 
         [Required(ErrorMessage ="This field is required")]

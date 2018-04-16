@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Critter.Web.Filters;
 
 namespace Critter.Web.Controllers
 {
@@ -21,6 +22,7 @@ namespace Critter.Web.Controllers
 
 
         [Route("users/{username}/dashboard")]
+        [CritterAuthorization]
         public ActionResult Dashboard(string username)
         {
             var conversations = messageDal.GetConversations(username);
@@ -28,6 +30,7 @@ namespace Critter.Web.Controllers
         }
 
         [Route("users/{forUser}/conversations/{withUser}")]
+        [CritterAuthorization]
         public ActionResult GetConversationThread(string forUser, string withUser)
         {
             var conversationThread = messageDal.GetConversations(forUser, withUser);
@@ -37,6 +40,7 @@ namespace Critter.Web.Controllers
 
 
         [Route("users/{username}/messages")]
+        [CritterAuthorization("user", "admin")]
         public ActionResult SentMessages(string username)
         {
             var messages = messageDal.GetAllSentMessageForUser(username);
@@ -53,6 +57,7 @@ namespace Critter.Web.Controllers
 
         [HttpPost]
         [Route("users/{username}/messages/new")]
+        [CritterAuthorization]
         public ActionResult NewMessage(string username, NewMessageViewModel model)
         {
             if (!ModelState.IsValid)
@@ -77,6 +82,11 @@ namespace Critter.Web.Controllers
         [Route("users/{username}/messages/{messageId}/delete")]
         public ActionResult DeleteMessage(int messageId, string username)
         {
+            if (Session[UsernameKey] as string != username)
+            {
+                return new HttpStatusCodeResult(403);
+            }
+
             var message = messageDal.GetMessage(messageId);
 
             if (message == null)
@@ -92,6 +102,11 @@ namespace Critter.Web.Controllers
         [Route("users/{username}/messages/{messageId}/delete")]
         public ActionResult DeleteMessage(string username, Message model)
         {
+            if (Session[UsernameKey] as string != username)
+            {
+                return new HttpStatusCodeResult(403);
+            }
+
             var message = messageDal.GetMessage(model.MessageId);
 
             if (message == null)

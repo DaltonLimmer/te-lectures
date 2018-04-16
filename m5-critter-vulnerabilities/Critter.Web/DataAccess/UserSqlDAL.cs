@@ -46,8 +46,8 @@ namespace Critter.Web.DataAccess
         {
             try
             {
-                                                                                //salt
-                string sql = $"INSERT INTO app_user VALUES (@username, @password, null, @avatar);";
+                                                                                //salt  //avatar
+                string sql = $"INSERT INTO app_user VALUES (@username, @password);";
 
                 using (SqlConnection conn = new SqlConnection(databaseConnectionString))
                 {
@@ -55,7 +55,7 @@ namespace Critter.Web.DataAccess
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@username", newUser.Username);
                     cmd.Parameters.AddWithValue("@password", newUser.Password);
-                    cmd.Parameters.AddWithValue("@avatar", newUser.AvatarId);
+                    //cmd.Parameters.AddWithValue("@avatar", newUser.AvatarId);
 
 
                     int result = cmd.ExecuteNonQuery();

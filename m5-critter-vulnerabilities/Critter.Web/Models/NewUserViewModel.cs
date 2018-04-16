@@ -18,6 +18,7 @@ namespace Critter.Web.Models
 
         [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Password:")]
+        [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]))(?=.*[\da-zA-Z!@#$%^&*()]).{8,128}$", ErrorMessage = "Password must meet the requirements")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
