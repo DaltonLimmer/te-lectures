@@ -58,6 +58,7 @@ namespace Critter.Web.Controllers
         [HttpPost]
         [Route("users/{username}/messages/new")]
         [CritterAuthorization]
+        [ValidateInput(false)]
         public ActionResult NewMessage(string username, NewMessageViewModel model)
         {
             if (!ModelState.IsValid)

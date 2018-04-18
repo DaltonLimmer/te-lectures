@@ -18,7 +18,7 @@ else
         {
             <li class="message">
                 <span class="username">@Html.ActionLink(message.Sender, "SearchMessages", "Home", new { userName = message.Sender }, null)</span>
-                <span class="message-text">@message.MessageText</span>
+                <span class="message-text">@Html.Raw(message.MessageText)</span>
                 <time class="timeago timestamp" datetime="@message.CreatedDate.ToString("o")">@message.CreatedDate.TimeAgo()</time>
             </li>
         }
