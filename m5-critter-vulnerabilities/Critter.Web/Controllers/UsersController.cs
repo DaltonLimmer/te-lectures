@@ -121,19 +121,19 @@ namespace Critter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = userDal.GetUser(model.Username);
+                var user = userDal.GetUser(model.Username, model.Password);
 
                 if (user == null)
                 {
                     ModelState.AddModelError("invalid-user", "The username provided does not exist");
                     return View("Login", model);
                 }
-                else if (user.Password != model.Password)
-                {
-                    ModelState.AddModelError("invalid-password", "The password provided is not valid");
-                    return View("Login", model);
+                //else if (user.Password != model.Password)
+                //{
+                //    ModelState.AddModelError("invalid-password", "The password provided is not valid");
+                //    return View("Login", model);
 
-                }
+                //}
 				
 				// Happy Path
                 base.LogUserIn(user.Username);                
