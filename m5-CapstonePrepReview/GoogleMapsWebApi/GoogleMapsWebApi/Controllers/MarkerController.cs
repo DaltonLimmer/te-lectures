@@ -29,5 +29,13 @@ namespace GoogleMapsWebApi.Controllers
 
         }
 
+        [HttpPost]  //!!!!! THIS REALLY SHOULD BE A DELETE INSTEAD OF A POST !!!!!
+        [Route("api/Marker/deleteAll")]
+        public HttpResponseMessage DeleteAllMarkers()
+        {
+            SavedMarkers.Clear();
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
     }
 }
