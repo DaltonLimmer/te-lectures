@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMapsWebApi", "GoogleMapsWebApi\GoogleMapsWebApi.csproj", "{CC10E5F5-D3AD-4E24-8BC6-655ACCD2A65C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMapsWebApi", "GoogleMapsWebApi\GoogleMapsWebApi.csproj", "{A99E0E4A-2AC0-4298-BF24-0DA39DAB5F53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CC10E5F5-D3AD-4E24-8BC6-655ACCD2A65C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC10E5F5-D3AD-4E24-8BC6-655ACCD2A65C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC10E5F5-D3AD-4E24-8BC6-655ACCD2A65C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC10E5F5-D3AD-4E24-8BC6-655ACCD2A65C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A99E0E4A-2AC0-4298-BF24-0DA39DAB5F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99E0E4A-2AC0-4298-BF24-0DA39DAB5F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A99E0E4A-2AC0-4298-BF24-0DA39DAB5F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A99E0E4A-2AC0-4298-BF24-0DA39DAB5F53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A2230580-2C00-4FAC-B88D-17442EE9804D}
+		SolutionGuid = {DF379B7C-2D80-4590-8B01-98E82A64CE28}
 	EndGlobalSection
 EndGlobal

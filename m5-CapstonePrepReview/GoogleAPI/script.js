@@ -35,5 +35,8 @@ function placeMarker(location, map) {
     console.log("Added marker here: ");
     console.log("  Lat: ", location.lat());
     console.log("  Lng: ", location.lng());
+    console.log("  URL: ", `http://localhost:56741/api/Marker/${location.lat()}:${location.lng()}`);
+
+
 
 }
